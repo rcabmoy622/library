@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tasks List
+{% endblock %}
+
+{% block style %}
+.actions {
+    float: right;
+}
+
+.book {
+    border: 1px solid lightgrey;
+    padding: 5px;
+    margin: 10px 0px;
+}
+{% endblock %}
+
+{% block body %}
+<h1>Your Library</h1>
+{% for book in books %}
+<div class="book">
+    {{book.name}}
+    {% if book.description %}
+    - {{book.description}}
+    {% endif %}
+    {% if book.due_date %}
+    - {{book.due_date}}
+    {% endif %}
+    <span class="actions">
+        <a href="/book/{{book.id}}/">Details</a> |
+        <a href="/book/{{book.id}}/update/">Update</a> |
+        <a href="/book/{{book.id}}/delete/">Delete</a> |
+    </span>
+</div>
+{% endfor %}
+<span class="create_book">
+    | <a href="/book/create/">Create</a> |
+</span>
+{% endblock %}
