@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 
 {% block title %}
-Edit author {{author.name}}
+Edit author '{{author.name}}'
 {% endblock %}
 
 {% block body %}
 <form method="POST">
     {% for field in form %}
-        {{field.label()}}<br>
-        {{field()}}<br>
-        <br>
+        {% if field.name == 'book' %}
+            <div>
+                {{field.label}}<br>
+                {% for book in field %}
+                <label for="{{book.id}}">
+                    <input type="checkbox" 
+                        name="book" 
+                        value="{{book.data}}" 
+                        {% if book.checked %}checked{% endif %}>
+                    {{book.label.text}}
+                </label><br>
+                {% endfor %}
+            </div><br>
+        {% else %}
+            {{field.label}}<br>
+            {{field}}<br><br>
+        {% endif %}
     {% endfor %}
 </form>
 {% endblock %}
