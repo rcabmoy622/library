@@ -3,11 +3,11 @@ import datetime
 
 class BookForm(Form):
     title = StringField('Name', [validators.Length(min=4, max=80), validators.DataRequired()])
-    description = TextAreaField('Description',[validators.Optional()])
-    due_date = DateTimeField('Due date',[validators.Optional()], format='%Y-%m-%d %H:%M:%S')
-    reminder = BooleanField('Send me a reminder',[])
+    biography = TextAreaField('Description',[validators.Optional()])
     category_id = SelectField('Category',[validators.DataRequired()], choices=[])
-    submit = SubmitField('Guardar')
+    author = SelectField('Author',[validators.DataRequired()], choices=[])
+    state_id = SelectField('State',[validators.DataRequired()], choices=[])
+    submit = SubmitField('Save book')
 
     def validate_due_date(form, field):
         if field.data < datetime.datetime.now():

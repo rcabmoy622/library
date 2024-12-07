@@ -23,6 +23,8 @@ def add_data_tables():
     with app.app_context():
         db.create_all()
 
+        "Adding categories"
+
         categories = [
             Category(name='Science'),
             Category(name='Technology'),
@@ -40,13 +42,43 @@ def add_data_tables():
         db.session.add_all(categories)
         db.session.commit()
 
-        t1 = Book(title='Book 1', description='First book')
-        t1.CategoryID = categories[0].id
+        "Adding states"
 
+        states = [
+            State(name='Available'),
+            State(name='Checked Out'),
+            State(name='Reserved'),
+            State(name='Lost'),
+            State(name='Damaged'),
+            State(name='In Processing'),
+            State(name='Archived'),
+        ]
+        
+        db.session.add_all(states)
+        db.session.commit()
 
-        db.session.add_all([t1])
+        "Adding books"
+
+        b1 = Book(title='Book 1', description='First book')
+        b1.CategoryID = categories[0].id
+        b1.StateID = states[0].id
+
+        db.session.add_all([b1])
+        db.session.commit()
+
+        "Adding authors"
+
+        a1 = Author(name='Author 1', biography='First author')
+
+        db.session.add_all([a1])
+        db.session.commit()
+
+        book_author_1 = BookAuthor(book_id=b1.id, author_id=a1.id)
+
+        db.session.add_all([book_author_1])
         db.session.commit()
 
 if __name__ == '__main__':
     drop_tables()
+    create_tables()
     add_data_tables()

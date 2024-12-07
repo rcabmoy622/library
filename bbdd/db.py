@@ -14,8 +14,6 @@ class Category(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False, unique=True)
 
-    def __repr__(self):
-        return(u'<{self.__class__.__name__}: {self.id}>'.format(self=self))
 
 class Book(db.Model):
     """Books of our application"""
@@ -23,9 +21,32 @@ class Book(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(120), nullable=False)
     description = Column(Text(250), nullable=True, default=None)
-
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
-    category = relationship("Category", backref="Books")
-    
-    def _re__(self):
-        return(u'<{self.__class__.__name__}: {self.id}>'.format(self=self))
+    StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
+
+    category = relationship("Category", backref="books")
+    state = relationship("State", backref="books")
+
+
+class Author(db.Model):
+    """Authors of our application"""
+    __tablename__ = 'authors'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(100), nullable=False)
+    biography = Column(Text, nullable=True)
+
+
+class BookAuthor(db.Model):
+    __tablename__ = 'book_authors'
+    book_id = Column(Integer, ForeignKey('books.id'), primary_key=True)
+    author_id = Column(Integer, ForeignKey('authors.id'), primary_key=True)
+
+    book = relationship("Book", backref="book_authors")
+    author = relationship("Author", backref="book_authors")
+
+
+class State(db.Model):
+    """States of our application"""
+    __tablename__ = 'states'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)

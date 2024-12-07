@@ -1,6 +1,6 @@
 from flask import Flask, abort, render_template, request, redirect
 import config
-from bbdd.db import Book, Category, db
+from bbdd.db import Book, Category, Author, State, db
 from forms.library_forms import BookForm
 
 app = Flask(__name__)
