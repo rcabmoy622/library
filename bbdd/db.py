@@ -15,6 +15,13 @@ class Category(db.Model):
     name = Column(String(50), nullable=False, unique=True)
 
 
+class State(db.Model):
+    """States of our application"""
+    __tablename__ = 'states'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+
+
 class Book(db.Model):
     """Books of our application"""
     __tablename__ = 'books'
@@ -41,12 +48,11 @@ class BookAuthor(db.Model):
     book_id = Column(Integer, ForeignKey('books.id'), primary_key=True)
     author_id = Column(Integer, ForeignKey('authors.id'), primary_key=True)
 
+    __table_args__ = (
+        db.UniqueConstraint('book_id', 'author_id', name='book_author_unique'),
+    ) # Asegura que no haya dos filas en la tabla con la misma combinación de book_id y author_id.
+
     book = relationship("Book", backref="book_authors")
     author = relationship("Author", backref="book_authors")
-
-
-class State(db.Model):
-    """States of our application"""
-    __tablename__ = 'states'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    # book = relationship("Book", backref="book_authors", cascade="all, delete-orphan")
+    # author = relationship("Author", backref="book_authors", cascade="all, delete-orphan")

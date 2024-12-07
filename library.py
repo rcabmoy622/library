@@ -1,7 +1,7 @@
 from flask import Flask, abort, render_template, request, redirect
 import config
 from bbdd.db import Book, Category, Author, State, db
-from forms.library_forms import BookForm
+from forms.library_forms import BookForm, AuthorForm
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -31,7 +31,7 @@ def delete(id):
     book = Book.query.filter_by(id=id).first()
     db.session.delete(book)
     db.session.commit()
-    return redirect('/list')
+    return redirect('/bookshelf')
 
 @app.route('/book/<int:id>/update/', methods=["get","post"])
 def update(id):
@@ -39,17 +39,19 @@ def update(id):
 
     form = BookForm(request.form, obj=book)
     form.category_id.choices = [(categories.id, categories.name) for categories in Category.query.all()]
+    form.author.choices = [(authors.id, authors.name) for authors in Author.query.all()]
+    form.state_id.choices = [(states.id, states.name) for states in State.query.all()]
 
     if form.validate() and request.method == "POST":
-        book.name = form.name.data
+        book.title = form.title.data
         book.description = form.description.data
-        book.due_date = form.due_date.data
-        book.reminder  = form.reminder.data
+        book.author = form.author.data
         book.CategoryID = form.category_id.data
+        book.StateID = form.state_id.data
 
         db.session.commit()
 
-        return redirect('/list')
+        return redirect('/bookshelf/')
 
     return render_template('book_form.html', book=book, form=form)
 
@@ -57,18 +59,42 @@ def update(id):
 def create():
     form = BookForm(request.form)
     form.category_id.choices = [(categories.id, categories.name) for categories in Category.query.all()]
+    form.author.choices = [(authors.id, authors.name) for authors in Author.query.all()]
+    form.state_id.choices = [(states.id, states.name) for states in State.query.all()]
 
     if form.validate() and request.method == "POST":
-        new_task = Book()
-        new_task.title = form.title.data
-        new_task.description = form.description.data
-        new_task.due_date = form.due_date.data
-        new_task.reminder = form.reminder.data
-        new_task.CategoryID = form.category_id.data
+        new_book = Book()
+        new_book.title = form.title.data
+        new_book.description = form.description.data
+        new_book.author = form.author.data
+        new_book.CategoryID = form.category_id.data
+        new_book.StateID = form.state_id.data
         
-        db.session.add(new_task)
-        db.session.commit() 
+        db.session.add(new_book)
+        db.session.commit()
 
-        return redirect('/list')
+        return redirect('/bookshelf/')
+
+    return render_template('create_book_form.html', form=form)
+
+@app.route('/author/create/', methods=["get","post"])
+def create():
+    form = AuthorForm(request.form)
+    form.category_id.choices = [(categories.id, categories.name) for categories in Category.query.all()]
+    form.author.choices = [(authors.id, authors.name) for authors in Author.query.all()]
+    form.state_id.choices = [(states.id, states.name) for states in State.query.all()]
+
+    if form.validate() and request.method == "POST":
+        new_book = Book()
+        new_book.title = form.title.data
+        new_book.description = form.description.data
+        new_book.author = form.author.data
+        new_book.CategoryID = form.category_id.data
+        new_book.StateID = form.state_id.data
+        
+        db.session.add(new_book)
+        db.session.commit()
+
+        return redirect('/bookshelf/')
 
     return render_template('create_book_form.html', form=form)
