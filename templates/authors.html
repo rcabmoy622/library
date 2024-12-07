@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Authors
+{% endblock %}
+
+{% block style %}
+.actions {
+    float: right;
+}
+
+.author {
+    border: 1px solid lightgrey;
+    padding: 5px;
+    margin: 10px 0px;
+}
+{% endblock %}
+
+{% block body %}
+<h1>Your saved Authors</h1>
+{% for author in authors %}
+<div class="author">
+    {{author.name}}
+    {% if author.biography %}
+    - {{author.biography}}
+    {% endif %}
+    <span class="actions">
+        <a href="/author/{{author.id}}/">Details</a> |
+        <a href="/author/{{author.id}}/update/">Update</a> |
+        <a href="/author/{{author.id}}/delete/">Delete</a> |
+    </span>
+</div>
+{% endfor %}
+<span class="create_author">
+    | <a href="/author/create/">Create</a> |
+</span>
+{% endblock %}

@@ -13,16 +13,30 @@ def home():
     return render_template('home.html')
 
 @app.route('/bookshelf/')
-def list():
+def list_books():
     books = Book.query.all()
-    return render_template('bookshelf.html', books=books, new_book = books)
+    return render_template('bookshelf.html', books=books)
+
+@app.route('/authors/')
+def list_authors():
+    authors = Author.query.all()
+    return render_template('authors.html', authors=authors)
 
 @app.route('/book/<int:id>/')
-def view_details(id):
+def view_book_details(id):
     book = Book.query.filter_by(id=id).first()
 
     if book:
         return render_template('book_details.html', book=book)
+    else:
+        abort(404)
+
+@app.route('/author/<int:id>/')
+def view_author_details(id):
+    author = Author.query.filter_by(id=id).first()
+
+    if author:
+        return render_template('author_details.html', author=author)
     else:
         abort(404)
 
@@ -113,9 +127,6 @@ def update_book(id):
         db.session.commit()
 
         return redirect('/bookshelf/')
-    
-    current_authors = [author.author_id for author in book.book_authors]
-    form.author.data = current_authors
 
     return render_template('book_form.html', book=book, form=form)
 
@@ -124,7 +135,7 @@ def update_author(id):
     author = Author.query.filter_by(id=id).first()
 
     form = AuthorForm(request.form, obj=author)
-    form.book.choices = [(book.id, book.name) for book in Book.query.all()]
+    form.book.choices = [(book.id, book.title) for book in Book.query.all()]
 
     if form.validate() and request.method == "POST":
         author.name = form.name.data
@@ -138,6 +149,6 @@ def update_author(id):
 
         db.session.commit()
 
-        return redirect('/bookshelf/')
+        return redirect('/authors/')
 
-    return render_template('book_form.html', author=author, form=form)
+    return render_template('author_form.html', author=author, form=form)
