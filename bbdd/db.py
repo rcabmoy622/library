@@ -22,6 +22,32 @@ class State(db.Model):
     name = Column(String, nullable=False)
 
 
+class Author(db.Model):
+    """Authors of our application"""
+    __tablename__ = 'authors'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(100), nullable=False)
+    biography = Column(Text, nullable=True)
+
+    books = relationship('Book', secondary='book_authors', back_populates="authors")
+
+
+class BookAuthor(db.Model):
+    __tablename__ = 'book_authors'
+    book_id = Column(Integer, ForeignKey('books.id'), primary_key=True)
+    author_id = Column(Integer, ForeignKey('authors.id'), primary_key=True)
+
+    book = relationship("Book", backref="book_authors")
+    author = relationship("Author", backref="book_authors")
+
+    __table_args__ = (
+        db.UniqueConstraint('book_id', 'author_id', name='book_author_unique'),
+    ) # Asegura que no haya dos filas en la tabla con la misma combinación de book_id y author_id.
+
+    book = relationship("Book", backref="book_authors")
+    author = relationship("Author", backref="book_authors")
+
+
 class Book(db.Model):
     """Books of our application"""
     __tablename__ = 'books'
@@ -31,28 +57,6 @@ class Book(db.Model):
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
     StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
 
+    authors = relationship('Author', secondary='book_authors', back_populates="books")
     category = relationship("Category", backref="books")
     state = relationship("State", backref="books")
-
-
-class Author(db.Model):
-    """Authors of our application"""
-    __tablename__ = 'authors'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(100), nullable=False)
-    biography = Column(Text, nullable=True)
-
-
-class BookAuthor(db.Model):
-    __tablename__ = 'book_authors'
-    book_id = Column(Integer, ForeignKey('books.id'), primary_key=True)
-    author_id = Column(Integer, ForeignKey('authors.id'), primary_key=True)
-
-    __table_args__ = (
-        db.UniqueConstraint('book_id', 'author_id', name='book_author_unique'),
-    ) # Asegura que no haya dos filas en la tabla con la misma combinación de book_id y author_id.
-
-    book = relationship("Book", backref="book_authors")
-    author = relationship("Author", backref="book_authors")
-    # book = relationship("Book", backref="book_authors", cascade="all, delete-orphan")
-    # author = relationship("Author", backref="book_authors", cascade="all, delete-orphan")

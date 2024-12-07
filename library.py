@@ -22,7 +22,7 @@ def view_details(id):
     book = Book.query.filter_by(id=id).first()
 
     if book:
-        return render_template('details.html', book=book)
+        return render_template('book_details.html', book=book)
     else:
         abort(404)
 
@@ -32,60 +32,6 @@ def delete(id):
     db.session.delete(book)
     db.session.commit()
     return redirect('/bookshelf')
-
-@app.route('/book/<int:id>/update/', methods=["get","post"])
-def update_book(id):
-    book = Book.query.filter_by(id=id).first()
-
-    form = BookForm(request.form, obj=book)
-    form.category_id.choices = [(category.id, category.name) for category in Category.query.all()]
-    form.author.choices = [(author.id, author.name) for author in Author.query.all()]
-    form.state_id.choices = [(state.id, state.name) for state in State.query.all()]
-
-    if form.validate() and request.method == "POST":
-        book.title = form.title.data
-        book.description = form.description.data
-        book.author = form.author.data
-        book.CategoryID = form.category_id.data
-        book.StateID = form.state_id.data
-
-        selected_authors = form.author.data
-        BookAuthor.query.filter_by(book_id=book.id).delete()
-        for author_id in selected_authors:
-            book_author = BookAuthor(book_id=book.id, author_id=author_id)
-            db.session.add(book_author)
-
-        db.session.commit()
-
-        return redirect('/bookshelf/')
-    
-    current_authors = [author.author_id for author in book.book_authors]
-    form.author.data = current_authors
-
-    return render_template('book_form.html', book=book, form=form)
-
-@app.route('/author/<int:id>/update/', methods=["get","post"])
-def update_author(id):
-    author = Author.query.filter_by(id=id).first()
-
-    form = AuthorForm(request.form, obj=author)
-    form.book.choices = [(book.id, book.name) for book in Book.query.all()]
-
-    if form.validate() and request.method == "POST":
-        author.name = form.name.data
-        author.biography = form.biography.data
-
-        selected_books = form.book.data 
-        BookAuthor.query.filter_by(author_id=author.id).delete()
-        for book_id in selected_books:
-            book_author = BookAuthor(book_id=book_id, author_id=author.id)
-            db.session.add(book_author)
-
-        db.session.commit()
-
-        return redirect('/bookshelf/')
-
-    return render_template('book_form.html', author=author, form=form)
 
 @app.route('/book/create/', methods=["get","post"])
 def create_book():
@@ -140,3 +86,58 @@ def create_author():
         return redirect('/bookshelf/')
 
     return render_template('create_book_form.html', form=form)
+
+@app.route('/book/<int:id>/update/', methods=["get","post"])
+def update_book(id):
+    book = Book.query.filter_by(id=id).first()
+
+    form = BookForm(request.form, obj=book)
+    form.category_id.choices = [(category.id, category.name) for category in Category.query.all()]
+    form.author.choices = [(author.id, author.name) for author in Author.query.all()]
+    form.state_id.choices = [(state.id, state.name) for state in State.query.all()]
+
+    if form.validate() and request.method == "POST":
+        book.title = form.title.data
+        book.description = form.description.data
+        book.author = form.author.data
+        book.CategoryID = form.category_id.data
+        book.StateID = form.state_id.data
+
+        BookAuthor.query.filter_by(book_id=book.id).delete()
+
+        selected_authors = form.author.data
+        for author_id in selected_authors:
+            book_author = BookAuthor(book_id=book.id, author_id=author_id)
+            db.session.add(book_author)
+
+        db.session.commit()
+
+        return redirect('/bookshelf/')
+    
+    current_authors = [author.author_id for author in book.book_authors]
+    form.author.data = current_authors
+
+    return render_template('book_form.html', book=book, form=form)
+
+@app.route('/author/<int:id>/update/', methods=["get","post"])
+def update_author(id):
+    author = Author.query.filter_by(id=id).first()
+
+    form = AuthorForm(request.form, obj=author)
+    form.book.choices = [(book.id, book.name) for book in Book.query.all()]
+
+    if form.validate() and request.method == "POST":
+        author.name = form.name.data
+        author.biography = form.biography.data
+
+        selected_books = form.book.data 
+        BookAuthor.query.filter_by(author_id=author.id).delete()
+        for book_id in selected_books:
+            book_author = BookAuthor(book_id=book_id, author_id=author.id)
+            db.session.add(book_author)
+
+        db.session.commit()
+
+        return redirect('/bookshelf/')
+
+    return render_template('book_form.html', author=author, form=form)
