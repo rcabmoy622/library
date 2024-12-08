@@ -41,11 +41,20 @@ def view_author_details(id):
         abort(404)
 
 @app.route('/book/<int:id>/delete/')
-def delete(id):
+def delete_book(id):
     book = Book.query.filter_by(id=id).first()
+    BookAuthor.query.filter_by(book_id=book.id).delete()
     db.session.delete(book)
     db.session.commit()
     return redirect('/bookshelf')
+
+@app.route('/author/<int:id>/delete/')
+def delete_author(id):
+    author = Author.query.filter_by(id=id).first()
+    BookAuthor.query.filter_by(author_id=author.id).delete()
+    db.session.delete(author)
+    db.session.commit()
+    return redirect('/authors')
 
 @app.route('/book/create/', methods=["get","post"])
 def create_book():
@@ -97,9 +106,9 @@ def create_author():
 
         db.session.commit()
 
-        return redirect('/bookshelf/')
+        return redirect('/authors/')
 
-    return render_template('create_book_form.html', form=form)
+    return render_template('create_author_form.html', form=form)
 
 @app.route('/book/<int:id>/update/', methods=["get","post"])
 def update_book(id):
@@ -127,8 +136,11 @@ def update_book(id):
         db.session.commit()
 
         return redirect('/bookshelf/')
+    
+    current_authors = [author.author_id for author in book.book_authors]
+    form.author.data = current_authors
 
-    return render_template('book_form.html', book=book, form=form)
+    return render_template('update_book_form.html', book=book, form=form)
 
 @app.route('/author/<int:id>/update/', methods=["get","post"])
 def update_author(id):
@@ -150,5 +162,8 @@ def update_author(id):
         db.session.commit()
 
         return redirect('/authors/')
+    
+    current_books = [book_author.book_id for book_author in author.book_authors]
+    form.book.data = current_books
 
-    return render_template('author_form.html', author=author, form=form)
+    return render_template('update_author_form.html', author=author, form=form)

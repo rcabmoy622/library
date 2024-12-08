@@ -27,7 +27,7 @@ Authors
     <span class="actions">
         <a href="/author/{{author.id}}/">Details</a> |
         <a href="/author/{{author.id}}/update/">Update</a> |
-        <a href="/author/{{author.id}}/delete/">Delete</a> |
+        <a href="/author/{{author.id}}/delete/" onclick="return confirm('Are you sure you want to delete this author?')">Delete</a> |
     </span>
 </div>
 {% endfor %}

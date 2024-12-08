@@ -7,16 +7,16 @@ Create book
 {% block body %}
 <form method="POST">
     {% for field in form %}
-        {% if field.name == 'author' %}
+        {% if field.name == 'book' %}
             <div>
                 {{field.label}}<br>
-                {% for author in field %}
-                <label for="{{author.id}}">
+                {% for book in field %}
+                <label for="{{book.id}}">
                     <input type="checkbox" 
-                        name="author" 
-                        value="{{author.data}}"
-                        {% if author.data in form.author.data %}checked{% endif %}>
-                    {{author.label.text}}
+                        name="book" 
+                        value="{{book.data}}"
+                        {% if book.data in form.book.data %}checked{% endif %}>
+                    {{book.label.text}}
                 </label><br>
                 {% endfor %}
             </div><br>
