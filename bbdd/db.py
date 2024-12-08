@@ -29,7 +29,7 @@ class Author(db.Model):
     name = Column(String(100), nullable=False)
     biography = Column(Text, nullable=True)
 
-    books = relationship('Book', secondary='book_authors', back_populates="authors")
+    books = relationship('Book', secondary='book_authors', back_populates="authors", overlaps="book,book_authors")
 
 
 class BookAuthor(db.Model):
@@ -38,7 +38,7 @@ class BookAuthor(db.Model):
     author_id = Column(Integer, ForeignKey('authors.id', ondelete="CASCADE"), primary_key=True)
 
     book = relationship("Book", backref="book_authors")
-    author = relationship("Author", backref="book_authors")
+    author = relationship("Author", backref="book_authors", overlaps="books")
 
     __table_args__ = (
         db.UniqueConstraint('book_id', 'author_id', name='book_author_unique'),
@@ -54,6 +54,6 @@ class Book(db.Model):
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
     StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
 
-    authors = relationship('Author', secondary='book_authors', back_populates="books", cascade="all, delete")
+    authors = relationship('Author', secondary='book_authors', back_populates="books", overlaps="author,book_authors,book" ,cascade="all, delete")
     category = relationship("Category", backref="books")
     state = relationship("State", backref="books")
