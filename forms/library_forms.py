@@ -2,16 +2,16 @@ from wtforms import Form, StringField, SubmitField, validators, TextAreaField, S
 import datetime
 
 class BookForm(Form):
-    title = StringField('Name', [validators.Length(min=4, max=80), validators.DataRequired()])
+    title = StringField('Name', [validators.DataRequired()])
     description = TextAreaField('Description', [validators.Optional()])
-    author = SelectMultipleField('Authors', [validators.DataRequired()], choices=[])
+    author = SelectMultipleField('Authors', [validators.Optional()], choices=[])
     category_id = SelectField('Category', [validators.DataRequired()], choices=[])
     state_id = SelectField('State', [validators.DataRequired()], choices=[])
     submit = SubmitField('Save book')
 
 
 class AuthorForm(Form):
-    name = StringField('Name', [validators.Length(min=4, max=80), validators.DataRequired()])
+    name = StringField('Name', [validators.DataRequired()])
     biography = TextAreaField('Biography', [validators.Optional()])
     book = SelectMultipleField('Books', [validators.Optional()], choices=[])
     submit = SubmitField('Save author')
