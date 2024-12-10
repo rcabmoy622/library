@@ -25,25 +25,25 @@ Your books
         <a type="button" href="/book/{{book.id}}/" class="btn btn-sm btn-outline-secondary">Details</a>
         <a type="button" href="/book/{{book.id}}/update/" class="btn btn-sm btn-outline-secondary">Edit</a>
         <a type="button" href="/book/{{book.id}}/delete/" data-bs-toggle="modal" data-bs-target="#delete_book_Modal"class="btn btn-sm btn-outline-secondary">Delete</a>
-            <!-- Modal -->
-            <div class="modal fade" id="delete_book_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete book</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    Are you sure that you want to delete '{{book.title}}'
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="/book/{{book.id}}/delete/" type="button" class="btn btn-primary">Delete</a>
-                    </div>
+      </div>
+        <!-- Delete book confirmation modal -->
+        <div class="modal fade" id="delete_book_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete book</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                Are you sure that you want to delete '{{book.title}}'
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="/book/{{book.id}}/delete/" type="button" class="btn btn-danger">Delete</a>
                 </div>
             </div>
-      </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endfor %}
@@ -52,3 +52,13 @@ Your books
 </span>
 
 {% endblock %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        
+        
+
+      </div>
+    </div>
+</div>
