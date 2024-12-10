@@ -9,67 +9,46 @@ Your books
     float: right;
 }
 
-.book {
-    border: 1px solid lightgrey;
-    padding: 5px;
-    margin: 10px 0px;
-}
 {% endblock %}
 
 {% block body %}
 <h1>Your Library</h1>
 {% for book in books %}
-<div class="book">
-    {{book.title}}
-    {% if book.description %}
-    - {{book.description}}
-    {% endif %}
-    {% if book.due_date %}
-    - {{book.due_date}}
-    {% endif %}
-    <span class="actions">
-        <a href="/book/{{book.id}}/">Details</a> |
-        <a href="/book/{{book.id}}/update/">Update</a> |
-        <a href="/book/{{book.id}}/delete/" data-bs-toggle="modal" data-bs-target="#delete_book_Modal">Delete</a> |
-        
-        <!-- Modal -->
-        <div class="modal fade" id="delete_book_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete book</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{book.title}}</h5>
+      {% if book.description %}
+      <p class="card-text">{{book.description}}</p>
+      {% endif %}
+      <div class="btn-group">
+        <a type="button" href="/book/{{book.id}}/" class="btn btn-sm btn-outline-secondary">Details</a>
+        <a type="button" href="/book/{{book.id}}/update/" class="btn btn-sm btn-outline-secondary">Edit</a>
+        <a type="button" href="/book/{{book.id}}/delete/" data-bs-toggle="modal" data-bs-target="#delete_book_Modal"class="btn btn-sm btn-outline-secondary">Delete</a>
+            <!-- Modal -->
+            <div class="modal fade" id="delete_book_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete book</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Are you sure that you want to delete '{{book.title}}'
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="/book/{{book.id}}/delete/" type="button" class="btn btn-primary">Delete</a>
+                    </div>
                 </div>
-                <div class="modal-body">
-                Are you sure that you want to delete '{{book.title}}'
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a href="/book/{{book.id}}/delete/" type="button" class="btn btn-primary">Delete</a>
                 </div>
             </div>
-            </div>
-        </div>
-            </span>
-        </div>
-    </span>
+      </div>
+    </div>
 </div>
 {% endfor %}
 <span class="create_book">
     | <a href="/book/create/">Create</a> |
 </span>
-
-<div class="book_card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <div class="btn-group">
-        <a type="button" class="btn btn-sm btn-outline-secondary">View</a>
-        <a type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
-      </div>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-</div>
 
 {% endblock %}
