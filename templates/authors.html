@@ -17,6 +17,7 @@ Authors
 {% endblock %}
 
 {% block body %}
+<section class="page_container">
 <h1>Your saved Authors</h1>
 {% for author in authors %}
 <div class="author">
@@ -32,6 +33,7 @@ Authors
 </div>
 {% endfor %}
 <span class="create_author">
-    | <a href="/author/create/">Create</a> |
+    <a type="button" href="/author/create/" class="btn btn-dark">Add author</a>
 </span>
+</section>
 {% endblock %}

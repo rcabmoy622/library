@@ -5,6 +5,7 @@ Details '{{book.title}}'
 {% endblock %}
 
 {% block body %}
+<section class="page_container">
 <h1>Details page for '{{book.title}}'</h1>
 
 <table border="1">
@@ -36,6 +37,6 @@ Details '{{book.title}}'
     <td colspan="2" style="text-align: center; padding: 5px;"><strong><u>Category:</u> </strong>{{book.category.name}}</td>
   </tr>
 </table>
-
+</section>
 
 {% endblock %}

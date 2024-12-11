@@ -11,3 +11,14 @@ body {
 .pages_content {
     flex: 1; /* Empujar footer al fondo */
 }
+
+.page_container {
+    padding-right: 3%;
+    padding-left: 3%;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Rubik';
+    font-weight: 800;
+}

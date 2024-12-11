@@ -5,6 +5,7 @@ Create book
 {% endblock %}
 
 {% block body %}
+<section class="page_container">
 <form method="POST">
     {% for field in form %}
         {% if field.name == 'author' %}
@@ -34,4 +35,5 @@ Create book
         {% endif %}
     {% endfor %}
 </form>
+</section>
 {% endblock %}

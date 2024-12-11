@@ -12,6 +12,7 @@ Your books
 {% endblock %}
 
 {% block body %}
+<section class="page_container">
 <h1>Your Library</h1>
 {% for book in books %}
 <div class="card" style="width: 18rem;">
@@ -48,9 +49,9 @@ Your books
 </div>
 {% endfor %}
 <span class="create_book">
-    | <a href="/book/create/">Create</a> |
+    <a type="button" href="/book/create/" class="btn btn-dark">Add book</a>
 </span>
-
+</section>
 {% endblock %}
 
 <div class="album py-5 bg-body-tertiary">
