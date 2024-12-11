@@ -28,6 +28,7 @@ class Author(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     biography = Column(Text, nullable=True)
+    image = Column(String, nullable=True)
 
     books = relationship('Book', secondary='book_authors', back_populates="authors", overlaps="book,book_authors")
 
@@ -53,6 +54,7 @@ class Book(db.Model):
     description = Column(Text(250), nullable=True, default=None)
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
     StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
+    image = Column(String, nullable=True)
 
     authors = relationship('Author', secondary='book_authors', back_populates="books", overlaps="author,book_authors,book" ,cascade="all, delete")
     category = relationship("Category", backref="books")

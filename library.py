@@ -69,6 +69,7 @@ def create_book():
         new_book.description = form.description.data
         new_book.CategoryID = form.category_id.data
         new_book.StateID = form.state_id.data
+        new_book.image = form.image.data
         
         db.session.add(new_book)
         db.session.commit() # Para generar el ID del libro
@@ -95,6 +96,7 @@ def create_author():
         new_author = Author()
         new_author.name = form.name.data
         new_author.biography = form.biography.data
+        new_author.image = form.image.data
         
         db.session.add(new_author)
         db.session.commit() # Para generar el ID del autor
@@ -125,6 +127,7 @@ def update_book(id):
         book.author = form.author.data
         book.CategoryID = form.category_id.data
         book.StateID = form.state_id.data
+        book.image = form.image.data
 
         BookAuthor.query.filter_by(book_id=book.id).delete()
 
@@ -152,6 +155,7 @@ def update_author(id):
     if form.validate() and request.method == "POST":
         author.name = form.name.data
         author.biography = form.biography.data
+        author.image = form.image.data
 
         selected_books = form.book.data 
         BookAuthor.query.filter_by(author_id=author.id).delete()

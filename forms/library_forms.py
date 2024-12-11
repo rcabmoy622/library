@@ -7,6 +7,7 @@ class BookForm(Form):
     author = SelectMultipleField('Authors', [validators.Optional()], choices=[])
     category_id = SelectField('Category', [validators.DataRequired()], choices=[])
     state_id = SelectField('State', [validators.DataRequired()], choices=[])
+    image = StringField('Image URL', [validators.Optional(), validators.URL(message="Invalid URL")])
     submit = SubmitField('Save book')
 
 
@@ -14,4 +15,5 @@ class AuthorForm(Form):
     name = StringField('Name', [validators.DataRequired()])
     biography = TextAreaField('Biography', [validators.Optional()])
     book = SelectMultipleField('Books', [validators.Optional()], choices=[])
+    image = StringField('Image URL', [validators.Optional(), validators.URL(message="Invalid URL")])
     submit = SubmitField('Save author')
