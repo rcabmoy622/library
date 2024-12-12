@@ -37,7 +37,7 @@ Your Authors
             <div class="card-body">
                 <h5 class="card-title">{{author.name}}</h5>
                 {% if author.biography %}
-                    {{author.biography}}
+                <p class="card-text">{{author.biography}}</p>
                 {% endif %}
                 {% if author.books %}
                     {% for book in author.books %}
