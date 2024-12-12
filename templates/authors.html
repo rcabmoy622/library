@@ -21,12 +21,12 @@ Your Authors
 <h1>Your Saved Authors</h1>
 
 <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
         {% for author in authors %}
         <div class="col">
             <div class="card shadow-sm">
             {% if author.image %}
-            <img src="{{author.image}}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{author.name}}">
+            <img src="{{author.image}}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{author.name}}" style="max-height: 250px; object-fit: contain;">
             {% else %}
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <rect width="100%" height="100%" fill="#55595c"></rect>
@@ -50,26 +50,8 @@ Your Authors
                     <div class="btn-group">
                         <a type="button" href="/author/{{author.id}}/" class="btn btn-sm btn-outline-secondary">Details</a>
                         <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a type="button" href="/author/{{author.id}}/delete/" data-bs-toggle="modal" data-bs-target="#delete_book_Modal"class="btn btn-sm btn-outline-secondary">Delete</a>
+                        <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-outline-secondary" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
                     </div>
-                        <!-- Delete author confirmation modal -->
-                        <div class="modal fade" id="delete_book_Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete author</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                Are you sure that you want to delete '{{author.name}}'
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <a href="/author/{{author.id}}/delete/" type="button" class="btn btn-danger">Delete</a>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
                 </div>
             </div>
             </div>
