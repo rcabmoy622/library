@@ -1,58 +1,71 @@
 {% extends "base.html" %}
 
 {% block title %}
-'{{author.name}}' details
+'{{ author.name }}' details
 {% endblock %}
 
 {% block body %}
 <section class="page_container">
-<h1>{{author.name}}</h1>
+  
+<h1>{{ author.name }}</h1>
 
-<table border="1">
-  <tr>
-    <th style="padding: 5px;">ID</th>
-    <td style="padding: 5px;">{{author.id}}</td>
-  </tr>
-  <tr>
-    <th style="padding: 5px;">Name</th>
-    <td style="padding: 5px;">{{author.name}}</td>
-  </tr>
-  <tr>
-    <th style="padding: 5px;">Biography</th>
-    <td style="padding: 5px;">{{author.biography}}</td>
-  </tr>
-  <tr>
-    <th style="padding: 5px;">Books</th>
-    <td style="padding: 5px;">
-      {% for book in author.books %}
-        {{ book.title }}{% if not loop.last %}, {% endif %}
-      {% endfor %}
-    </td>
-  </tr>
-</table>
+<div class="mb-3">
+  <a href="/authors/" class="btn btn-secondary btn-sm">
+    &larr; Back to Authors List
+  </a>
+</div>
 
 <div class="card">
   <div class="row g-0">
-    <div class="col-md-4">
-      <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>
-    </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{author.name}}</h5>
-        {% if author.biography %}
-        <p class="card-text">{{author.biography}}</p>
-        {% endif %}
-        {% if author.books %}
-          {% for book in author.books %}
-          <p class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
-            {{ book.title }}
-          </p>
-          {% endfor %}
-        {% endif %}
+        <h5 class="card-title">{{ author.name }}</h5>
+        <table class="table table-bordered rounded" style="table-layout: fixed; width: 100%;">
+          <tbody>
+            {% if author.biography %}
+            <tr>
+              <td style="width: 25%;"><strong>Biography:</strong></td>
+              <td>{{ author.biography }}</td>
+            </tr>
+            {% endif %}
+            {% if author.books %}
+            <tr>
+              <td><strong>Books:</strong></td>
+              <td>
+                {% for book in author.books %}
+                <span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
+                  {{ book.title }}
+                </span>
+                {% endfor %}
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+
+        <div class="mt-3">
+            <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-warning">Edit</a>
+            <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
+        </div>
+
       </div>
+    </div>
+
+    
+
+    <div class="col-md-4 d-flex align-items-center justify-content-center">
+      {% if author.image %}
+      <img src="{{ author.image }}" class="card-img-right img-fluid" alt="{{ author.name }}" style="max-height: 250px; object-fit: contain;">
+      {% else %}
+      <svg class="bd-placeholder-img card-img-right" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false" style="max-height: 250px;">
+        <rect width="100%" height="100%" fill="#868e96"></rect>
+        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+      </svg>
+      {% endif %}
     </div>
   </div>
 </div>
+
 </section>
 
 {% endblock %}
