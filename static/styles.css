@@ -23,3 +23,17 @@ h1 {
     font-family: 'Rubik';
     font-weight: 800;
 }
+
+.btn-hover-details:hover, 
+.btn-hover-edit:hover {
+    color: #6c757d !important;
+    background-color: rgba(108, 117, 125, 0.25);
+    border-color: #6c757d !important;
+}
+
+
+.btn-hover-delete:hover {
+    color: #dc3545 !important;
+    background-color: rgba(220, 53, 70, 0.25);
+    border-color: #dc3545 !important;
+}

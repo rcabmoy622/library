@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-Your Books
+Your Library
 {% endblock %}
 
 {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 .actions {
     float: right;
 }
@@ -42,9 +43,9 @@ Your Books
                 {% endif %}
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <a type="button" href="/book/{{book.id}}/" class="btn btn-sm btn-outline-secondary">Details</a>
-                        <a type="button" href="/book/{{book.id}}/update/" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a type="button" href="/book/{{book.id}}/delete/" class="btn btn-sm btn-outline-secondary" onclick="return confirm('Are you sure you want to delete {{book.title}}?')">Delete</a>
+                        <a type="button" href="/book/{{book.id}}/" class="btn btn-sm btn-outline-secondary btn-hover-details">Details</a>
+                        <a type="button" href="/book/{{book.id}}/update/" class="btn btn-sm btn-outline-secondary btn-hover-edit">Edit</a>
+                        <a type="button" href="/book/{{book.id}}/delete/" class="btn btn-sm btn-outline-secondary btn-hover-delete" onclick="return confirm('Are you sure you want to delete {{book.title}}?')">Delete</a>
                     </div>
                 </div>
             </div>

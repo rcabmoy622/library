@@ -5,6 +5,7 @@ Your Authors
 {% endblock %}
 
 {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 .actions {
     float: right;
 }
@@ -18,7 +19,7 @@ Your Authors
 
 {% block body %}
 <section class="page_container">
-<h1>Your Saved Authors</h1>
+<h1>Your Authors</h1>
 
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
@@ -48,9 +49,9 @@ Your Authors
                 {% endif %}
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <a type="button" href="/author/{{author.id}}/" class="btn btn-sm btn-outline-secondary">Details</a>
-                        <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-outline-secondary" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
+                        <a type="button" href="/author/{{author.id}}/" class="btn btn-sm btn-outline-secondary btn-hover-details">Details</a>
+                        <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-outline-secondary btn-hover-edit">Edit</a>
+                        <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-outline-secondary btn-hover-delete" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
                     </div>
                 </div>
             </div>
