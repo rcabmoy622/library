@@ -72,7 +72,7 @@ def create_book():
         new_book.image = form.image.data
         
         db.session.add(new_book)
-        db.session.commit() # Para generar el ID del libro
+        db.session.commit()
 
         selected_authors = form.author.data
         for author_id in selected_authors:
@@ -99,7 +99,7 @@ def create_author():
         new_author.image = form.image.data
         
         db.session.add(new_author)
-        db.session.commit() # Para generar el ID del autor
+        db.session.commit()
 
         selected_books = form.book.data
         for book_id in selected_books:
