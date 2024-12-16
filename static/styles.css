@@ -27,13 +27,35 @@ h1 {
 .btn-hover-details:hover, 
 .btn-hover-edit:hover {
     color: #6c757d !important;
-    background-color: rgba(108, 117, 125, 0.25);
+    background-color: rgba(108, 117, 125, 0.25) !important;
     border-color: #6c757d !important;
 }
 
+.btn-hover-details:active, 
+.btn-hover-edit:active {
+    color: #ffffff !important;
+    background-color: rgb(108, 117, 125) !important;
+    border-color: #6c757d !important;
+}
 
 .btn-hover-delete:hover {
     color: #dc3545 !important;
-    background-color: rgba(220, 53, 70, 0.25);
+    background-color: rgba(220, 53, 70, 0.25) !important;
     border-color: #dc3545 !important;
+}
+
+.btn-hover-delete:active {
+    color: #ffffff !important;
+    background-color: rgb(220, 53, 70) !important;
+    border-color: #dc3545 !important;
+}
+
+.card-text {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: auto;
 }

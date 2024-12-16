@@ -129,9 +129,9 @@ def update_book(id):
         book.StateID = form.state_id.data
         book.image = form.image.data
 
-        BookAuthor.query.filter_by(book_id=book.id).delete()
+        BookAuthor.query.filter_by(book_id=book.id).delete() #Eliminar relaciones existentes libro-autores
 
-        selected_authors = form.author.data
+        selected_authors = form.author.data #Crear relaciones seleccionadas libro-autores
         for author_id in selected_authors:
             book_author = BookAuthor(book_id=book.id, author_id=author_id)
             db.session.add(book_author)
@@ -142,6 +142,8 @@ def update_book(id):
     
     current_authors = [author.author_id for author in book.book_authors]
     form.author.data = current_authors
+    form.category_id.data = book.CategoryID
+    form.state_id.data = book.StateID
 
     return render_template('update_book.html', book=book, form=form)
 
@@ -156,9 +158,10 @@ def update_author(id):
         author.name = form.name.data
         author.biography = form.biography.data
         author.image = form.image.data
+ 
+        BookAuthor.query.filter_by(author_id=author.id).delete() #Eliminar relaciones existentes autor-libros
 
-        selected_books = form.book.data 
-        BookAuthor.query.filter_by(author_id=author.id).delete()
+        selected_books = form.book.data #Crear relaciones seleccionadas autor-libros
         for book_id in selected_books:
             book_author = BookAuthor(book_id=book_id, author_id=author.id)
             db.session.add(book_author)

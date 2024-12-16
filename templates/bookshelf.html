@@ -6,9 +6,6 @@ Your Library
 
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-.actions {
-    float: right;
-}
 {% endblock %}
 
 {% block body %}
@@ -16,7 +13,26 @@ Your Library
 <h1>Your Library</h1>
 
 <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+    <div class="card shadow-sm">
+        <div class="card-body d-flex justify-content-center align-items-center" style="height: 75px;">
+            <a href="/book/create/" class="btn btn-dark btn-lg w-100">Add a new book</a>
+        </div>
+    </div>
+    <br>
+
+    {% if not books %}
+    <div class="card shadow-sm">
+        <div class="card-body" style="height: 115px;">
+            <div class="alert alert-warning" style="text-align: center;" role="alert">
+                You do not have books in your library.
+                <br>
+                Add some books!
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">  
         {% for book in books %}
         <div class="col">
             <div class="card shadow-sm">
@@ -52,15 +68,7 @@ Your Library
             </div>
         </div>
         {% endfor %}
-
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body d-flex justify-content-center align-items-center" style="height: 225px;">
-                    <a href="/book/create/" class="btn btn-dark btn-lg w-100">Add a new book</a>
-                </div>
-            </div>
-        </div>
-
+        {% endif %}
     </div>
 </div>
 </section>
