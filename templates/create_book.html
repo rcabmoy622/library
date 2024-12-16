@@ -6,6 +6,7 @@ Create book
 
 {% block body %}
 <section class="page_container">
+<h1>Create Book</h1>
   <div class="mb-3">
     <a href="/bookshelf/" class="btn btn-secondary btn-sm">
       &larr; Back to Your Library
@@ -16,7 +17,7 @@ Create book
     <div class="row g-0">
       <div class="col-md-12">
         <div class="card-body">
-          <h5 class="card-title">Create Book</h5>
+          <h5 class="card-title">Book details</h5>
 
           <form method="POST">
             {% for field in form %}
@@ -39,7 +40,7 @@ Create book
                       </div>
                     {% endfor %}
                   </div>
-                </div>
+                </div>     
 
               {% elif field.name == 'category_id' or field.name == 'state_id' %}
                 <div class="mb-3">
@@ -75,13 +76,15 @@ Create book
               {% else %}
                 <div class="mb-3">
                   <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  {{ field(class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}") }}
+                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                        id="{{ field.id }}"
+                        name="{{ field.name }}">
                   {% if field.errors and request.method == 'POST' %}
-                    <div class="invalid-feedback">
-                      {% for error in field.errors %}
-                        <span>{{ error }}</span>
-                      {% endfor %}
-                    </div>
+                  <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
                   {% endif %}
                 </div>
               {% endif %}

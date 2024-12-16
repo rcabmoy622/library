@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create author
+{% endblock %}
+
+{% block body %}
+<section class="page_container">
+<h1>Create Author</h1>
+  <div class="mb-3">
+    <a href="/authors/" class="btn btn-secondary btn-sm">
+      &larr; Back to Your Authors
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-12">
+        <div class="card-body">
+          <h5 class="card-title">Author details</h5>
+
+          <form method="POST">
+            {% for field in form %}
+              {% if field.name == 'book' %}
+                <div class="mb-3">
+                  <label class="form-label">{{ field.label }}</label>
+                  <div class="form-check">
+                    {% for book in field %}
+                      <div class="form-check">
+                        <input 
+                          class="form-check-input" 
+                          type="checkbox" 
+                          name="book" 
+                          id="{{ book.id }}" 
+                          value="{{ book.data }}"
+                          {% if book.data in form.book.data %}checked{% endif %}>
+                        <label class="form-check-label" for="{{ book.id }}">
+                          {{ book.label.text }}
+                        </label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>     
+
+              {% elif field.name == 'submit' %}
+                <div class="mb-3">
+                  <button type="submit" class="btn btn-primary">Save Author</button>
+                </div>
+
+              {% else %}
+                <div class="mb-3">
+                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
+                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                        id="{{ field.id }}"
+                        name="{{ field.name }}">
+                  {% if field.errors and request.method == 'POST' %}
+                  <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

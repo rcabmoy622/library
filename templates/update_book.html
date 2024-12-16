@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create book
+{% endblock %}
+
+{% block body %}
+<section class="page_container">
+<h1>Create Book</h1>
+  <div class="mb-3">
+    <a href="/bookshelf/" class="btn btn-secondary btn-sm">
+      &larr; Back to Your Library
+    </a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-12">
+        <div class="card-body">
+          <h5 class="card-title">Book details</h5>
+
+          <form method="POST">
+            {% for field in form %}
+              {% if field.name == 'author' %}
+                <div class="mb-3">
+                  <label class="form-label">{{ field.label }}</label>
+                  <div class="form-check">
+                    {% for author in field %}
+                      <div class="form-check">
+                        <input 
+                          class="form-check-input" 
+                          type="checkbox" 
+                          name="author" 
+                          id="{{ author.id }}" 
+                          value="{{ author.data }}"
+                          {% if author.data in form.author.data %}checked{% endif %}>
+                        <label class="form-check-label" for="{{ author.id }}">
+                          {{ author.label.text }}
+                        </label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>     
+
+              {% elif field.name == 'category_id' or field.name == 'state_id' %}
+                <div class="mb-3">
+                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
+                  <select class="form-select {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
+                          id="{{ field.id }}" 
+                          name="{{ field.name }}">
+                    {% for value, label in field.choices %}
+                      <option value="{{ value }}" {% if value == field.data %}selected{% endif %}>
+                        {{ label }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  {% if field.errors and request.method == 'POST' %}
+                    <div class="invalid-feedback">
+                      {% for error in field.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+              {% elif field.name == 'submit' %}
+                <div class="mb-3">
+                  <button type="submit" class="btn btn-primary">Save Book</button>
+                </div>
+
+              {% else %}
+                <div class="mb-3">
+                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
+                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                        id="{{ field.id }}"
+                        name="{{ field.name }}"
+                        value="{{ field.data }}">
+                  {% if field.errors and request.method == 'POST' %}
+                  <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

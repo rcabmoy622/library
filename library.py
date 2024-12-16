@@ -83,7 +83,7 @@ def create_book():
 
         return redirect('/bookshelf/')
 
-    return render_template('create_book_form.html', form=form)
+    return render_template('create_book.html', form=form)
 
 @app.route('/author/create/', methods=["get","post"])
 def create_author():
@@ -110,7 +110,7 @@ def create_author():
 
         return redirect('/authors/')
 
-    return render_template('create_author_form.html', form=form)
+    return render_template('create_author.html', form=form)
 
 @app.route('/book/<int:id>/update/', methods=["get","post"])
 def update_book(id):
@@ -143,7 +143,7 @@ def update_book(id):
     current_authors = [author.author_id for author in book.book_authors]
     form.author.data = current_authors
 
-    return render_template('update_book_form.html', book=book, form=form)
+    return render_template('update_book.html', book=book, form=form)
 
 @app.route('/author/<int:id>/update/', methods=["get","post"])
 def update_author(id):
@@ -170,4 +170,4 @@ def update_author(id):
     current_books = [book_author.book_id for book_author in author.book_authors]
     form.book.data = current_books
 
-    return render_template('update_author_form.html', author=author, form=form)
+    return render_template('update_author.html', author=author, form=form)
