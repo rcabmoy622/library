@@ -1,7 +1,7 @@
-import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, relationship
+from flask_login import UserMixin
 
 class Base(DeclarativeBase):
     pass
@@ -60,8 +60,9 @@ class Book(db.Model):
     category = relationship("Category", backref="books")
     state = relationship("State", backref="books")
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """Users of our application"""
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     email = Column(String(100), unique=True)
     password = Column(String(100))

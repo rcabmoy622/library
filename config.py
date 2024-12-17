@@ -1,6 +1,6 @@
 import os
 
-secret_key = '1'
+SECRET_KEY = '1'
 PWD = os.path.abspath(os.curdir)
 
 DEBUG = True
