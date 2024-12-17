@@ -9,61 +9,62 @@
   
 <h1>{{ author.name }}</h1>
 
-<div class="mb-3">
-  <a href="/authors/" class="btn btn-secondary btn-sm">
-    &larr; Back to Your Authors
-  </a>
-</div>
+<div class="container">
+  <div class="mb-3">
+    <a href="/authors/" class="btn btn-secondary btn-sm">
+      &larr; Back to Your Authors
+    </a>
+  </div>
 
-<div class="card shadow-sm">
-  <div class="row g-0">
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{author.name}}</h5>
-        <table class="table table-bordered rounded" style="table-layout: fixed; width: 100%;">
-          <tbody>
-            {% if author.biography %}
-            <tr>
-              <td style="width: 25%;"><strong>Biography:</strong></td>
-              <td>{{author.biography}}</td>
-            </tr>
-            {% endif %}
-            {% if author.books %}
-            <tr>
-              <td><strong>Books:</strong></td>
-              <td>
-                {% for book in author.books %}
-                <span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
-                  {{book.title}}
-                </span>
-                {% endfor %}
-              </td>
-            </tr>
-            {% endif %}
-          </tbody>
-        </table>
+  <div class="card shadow-sm">
+    <div class="row g-0">
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{author.name}}</h5>
+          <table class="table table-bordered rounded" style="table-layout: fixed; width: 100%;">
+            <tbody>
+              {% if author.biography %}
+              <tr>
+                <td style="width: 25%;"><strong>Biography:</strong></td>
+                <td>{{author.biography}}</td>
+              </tr>
+              {% endif %}
+              {% if author.books %}
+              <tr>
+                <td><strong>Books:</strong></td>
+                <td>
+                  {% for book in author.books %}
+                  <span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
+                    {{book.title}}
+                  </span>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
 
-        <div class="btn-group">
-          <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-outline-secondary btn-hover-edit">Edit</a>
-          <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-outline-secondary btn-hover-delete" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
+          <div class="btn-group">
+            <a type="button" href="/author/{{author.id}}/update/" class="btn btn-sm btn-outline-secondary btn-hover-edit">Edit</a>
+            <a type="button" href="/author/{{author.id}}/delete/" class="btn btn-sm btn-outline-secondary btn-hover-delete" onclick="return confirm('Are you sure you want to delete {{author.name}}?')">Delete</a>
+          </div>
+
         </div>
-
       </div>
-    </div>
 
-    <div class="col-md-4 d-flex align-items-center justify-content-center">
-      {% if author.image %}
-      <img src="{{author.image}}" class="card-img-right img-fluid" alt="{{author.name}}" style="max-height: 250px; object-fit: contain;">
-      {% else %}
-      <svg class="bd-placeholder-img card-img-right" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false" style="max-height: 250px;">
-        <rect width="100%" height="100%" fill="#868e96"></rect>
-        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
-      </svg>
-      {% endif %}
+      <div class="col-md-4 d-flex align-items-center justify-content-center">
+        {% if author.image %}
+        <img src="{{author.image}}" class="card-img-right img-fluid" alt="{{author.name}}" style="max-height: 250px; object-fit: contain;">
+        {% else %}
+        <svg class="bd-placeholder-img card-img-right" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false" style="max-height: 250px;">
+          <rect width="100%" height="100%" fill="#868e96"></rect>
+          <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+        </svg>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
 
 </section>
-
 {% endblock %}

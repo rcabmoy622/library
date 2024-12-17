@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-'{{book.title}}' details
+Search Results
 {% endblock %}
 
 {% block body %}
 <section class="page_container">
 
-<h1>{{book.title}}</h1>
+<h1>Search Results</h1>
 
 <div class="container">
   <div class="mb-3">
@@ -84,6 +84,59 @@
       </div>
     </div>
   </div>
+
+  {% if not books %}
+    <div class="card shadow-sm">
+        <div class="card-body" style="height: 115px;">
+            <div class="alert alert-warning" style="text-align: center;" role="alert">
+                You do not have books in your library.
+                <br>
+                Add some books!
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">  
+        {% for book in books %}
+        <div class="col">
+            <div class="card shadow-sm">
+            {% if book.image %}
+            <img src="{{book.image}}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{book.title}}" style="object-fit: contain;">
+            {% else %}
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{book.title}}</text>
+                </svg>
+            {% endif %}
+            
+            <div class="card-body">
+                <h5 class="card-title">{{book.title}}</h5>
+                {% if book.description %}
+                <p class="card-text">{{book.description}}</p>
+                {% endif %}
+                {% if book.authors %}
+                    {% for author in book.authors %}
+                    <p class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
+                        {{ author.name }}
+                    </p>
+                    {% endfor %}
+                {% endif %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a type="button" href="/book/{{book.id}}/" class="btn btn-sm btn-outline-secondary btn-hover-details">Details</a>
+                        <a type="button" href="/book/{{book.id}}/update/" class="btn btn-sm btn-outline-secondary btn-hover-edit">Edit</a>
+                        <a type="button" href="/book/{{book.id}}/delete/" class="btn btn-sm btn-outline-secondary btn-hover-delete" onclick="return confirm('Are you sure you want to delete {{book.title}}?')">Delete</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>    
+        {% endfor %}
+        {% endif %}
+    
+
 </div>
 
 </section>

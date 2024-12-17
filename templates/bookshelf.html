@@ -13,23 +13,35 @@ Your Library
 <h1>Your Library</h1>
 
 <div class="container">
-    <div class="card shadow-sm">
-        <div class="card-body d-flex justify-content-center align-items-center" style="height: 75px;">
-            <a href="/book/create/" class="btn btn-dark btn-lg w-100">Add a new book</a>
+    <div class="card shadow-sm p-3 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="search_performed" class="form-control" 
+                               placeholder="Search books..." value="{{ search_performed }}">
+                        <button type="submit" class="btn btn-dark">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <a href="/book/create/" class="btn btn-dark btn-lg w-100">Add a New Book</a>
+            </div>
         </div>
     </div>
-    <br>
 
     {% if not books %}
-    <div class="card shadow-sm">
-        <div class="card-body" style="height: 115px;">
-            <div class="alert alert-warning" style="text-align: center;" role="alert">
+        {% if search_performed %}
+            <div class="alert alert-warning text-center" role="alert">
+                No books match your search: "<strong>{{ search_performed }}</strong>"
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center" role="alert">
                 You do not have books in your library.
                 <br>
                 Add some books!
             </div>
-        </div>
-    </div>
+        {% endif %}
 
     {% else %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">  

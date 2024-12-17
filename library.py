@@ -14,13 +14,23 @@ def home():
 
 @app.route('/bookshelf/')
 def list_books():
-    books = Book.query.all()
-    return render_template('bookshelf.html', books=books)
+    query = request.args.get('search_performed', '')
+
+    if query:
+        books = Book.query.filter(Book.title.ilike(f'%{query}%')).all()
+    else:
+        books = Book.query.all()
+    return render_template('bookshelf.html', books=books, search_performed=query)
 
 @app.route('/authors/')
 def list_authors():
-    authors = Author.query.all()
-    return render_template('authors.html', authors=authors)
+    query = request.args.get('search_performed', '')
+
+    if query:
+        authors = Author.query.filter(Author.name.ilike(f'%{query}%')).all()
+    else:
+        authors = Author.query.all()
+    return render_template('authors.html', authors=authors, search_performed=query)
 
 @app.route('/book/<int:id>/')
 def view_book_details(id):
@@ -174,3 +184,11 @@ def update_author(id):
     form.book.data = current_books
 
     return render_template('update_author.html', author=author, form=form)
+
+@app.route('/search/', methods=['get'])
+def search():
+    query = request.args.get('search_performed')
+    book_results = Book.query.filter(Book.title.ilike(f'%{query}%')).all()
+    author_results = Author.query.filter(Author.name.ilike(f'%{query}%')).all()
+
+    return render_template('search_results.html', book_results=book_results, author_results=author_results, query=query)
