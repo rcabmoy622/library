@@ -1,6 +1,6 @@
 from flask import Flask, abort, render_template, request, redirect
 import config
-from bbdd.db import Book, Category, Author, State, BookAuthor, db
+from bbdd.db import Book, Category, Author, State, BookAuthor, User, db
 from forms.library_forms import BookForm, AuthorForm
 
 app = Flask(__name__)
@@ -11,6 +11,10 @@ db.init_app(app)
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/login/')
+def login():
+    return render_template('login.html')
 
 @app.route('/bookshelf/')
 def list_books():

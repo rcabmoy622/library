@@ -59,3 +59,10 @@ class Book(db.Model):
     authors = relationship('Author', secondary='book_authors', back_populates="books", overlaps="author,book_authors,book" ,cascade="all, delete")
     category = relationship("Category", backref="books")
     state = relationship("State", backref="books")
+
+class User(db.Model):
+    """Users of our application"""
+    id = Column(Integer, primary_key=True)
+    email = Column(String(100), unique=True)
+    password = Column(String(100))
+    name = Column(String(1000))
