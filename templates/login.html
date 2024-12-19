@@ -9,44 +9,85 @@ Login
 {% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
 <section class="page_container">
 
-<div class="container">
-
-  <div class="column is-4 is-offset-4">
-    <h3 class="title">Login</h3>
-    <div class="box">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="notification is-danger">
-                {{ messages[0] }}
-            </div>
-        {% endif %}
-        {% endwith %}
-        <form method="POST" action="/login">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+  <div class="container">
+  
+    <div class="card shadow-sm">
+      <div class="row g-0">
+        <div class="col-md-12">
+          <div class="card-body">
+            <h5 class="card-title">Login</h5>
+            
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Your Password">
+            <form method="POST">
+              {% for field in form %}  
+                {% if field.name == 'email' %}
+                <div class="mb-3">
+                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
+                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                         id="{{ field.id }}"
+                         name="{{ field.name }}"
+                         type="email">
+                  {% if field.errors and request.method == 'POST' %}
+                  <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
                 </div>
-            </div>
-            <div class="field">
-                <label class="checkbox">
-                    <input type="checkbox" name="remember">
-                    Remember me
-                </label>
-            </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
-        </form>
+                  
+                {% elif field.name == 'password' %}
+                <div class="mb-3">
+                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
+                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                         id="{{ field.id }}"
+                         name="{{ field.name }}"
+                         type="password">
+                  {% if field.errors and request.method == 'POST' %}
+                  <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+
+                {% elif field.name == 'remember' %}
+                <div class="mb-3">
+                    <input class="form-check-input"
+                           id="{{ field.id }}" 
+                           name="{{ field.name }}"
+                           type="checkbox" 
+                      {% if field.data %}checked{% endif %}>
+                    <label class="form-check-label" for="{{ field.id }}">{{ field.label }}</label>
+                </div>
+  
+                {% elif field.name == 'submit' %}
+                  <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+                  </div>
+  
+                {% endif %}
+              {% endfor %}
+            </form>
+  
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-</div>
 </section>
+
 {% endblock %}

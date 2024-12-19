@@ -16,47 +16,43 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/index/')
-def index():
-    return render_template('home.html')
-
 @app.route('/profile/')
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
 
-
-@app.route('/login/')
+@app.route('/login/', methods=["get","post"])
 def login():
-    return render_template('login.html')
+    form = LoginForm(request.form)
+    
+    if form.validate() and request.method == "POST":
+        email = form.email.data
+        password = form.password.data
+        remember = form.remember.data
+        
+        user = User.query.filter_by(email=email).first()
 
-@app.route('/login', methods=['POST'])
-def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+        #Check if the user actually exists
+        if not user or not check_password_hash(user.password, password):
+            flash('Incorrect email or password. Try again.')
+            return redirect('/login/')
 
-    user = User.query.filter_by(email=email).first()
-
-    #Check if the user actually exists
-    if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
-        return redirect('login')
-
-    login_user(user, remember=remember)
-    return redirect('profile')
+        login_user(user, remember=remember)
+        flash('Welcome back!', 'success')
+        return redirect('/profile/')
+    
+    return render_template('login.html', form=form)
 
 @app.route('/signup/', methods=["get","post"])
 def signup():   
-
     form = SignupForm(request.form)
 
-    if form.validate():
+    if form.validate() and request.method == "POST":
         user = User.query.filter_by(email=form.email.data).first() # If this returns a user, then the email already exists in database
 
         if user:
             flash('Email address already exists', 'danger')
-            return redirect('signup')
+            return redirect('/signup/')
 
         new_user = User()
         new_user.email=form.email.data
@@ -67,7 +63,7 @@ def signup():
         db.session.commit()
 
         flash('Account created successfully! Please log in.', 'success')
-        return redirect('login')
+        return redirect('/login/')
     
     return render_template('signup.html', form=form)
 

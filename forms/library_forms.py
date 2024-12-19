@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, SubmitField, validators, TextAreaField, SelectField, SelectMultipleField, EmailField, PasswordField
+from wtforms import Form, StringField, SubmitField, TextAreaField, SelectField, SelectMultipleField, EmailField, PasswordField, BooleanField
 from wtforms.validators import Optional, DataRequired, Length, URL, Email
 
 class BookForm(Form):
@@ -8,7 +8,7 @@ class BookForm(Form):
     category_id = SelectField('Category', validators=[DataRequired()], choices=[])
     state_id = SelectField('State', validators=[DataRequired()], choices=[])
     image = StringField('Image URL', validators=[Optional(), URL(message="Invalid URL")])
-    submit = SubmitField('Save book')
+    submit = SubmitField('Save Book')
 
 
 class AuthorForm(Form):
@@ -16,7 +16,7 @@ class AuthorForm(Form):
     biography = TextAreaField('Biography', validators=[Optional()])
     book = SelectMultipleField('Books', validators=[Optional()], choices=[])
     image = StringField('Image URL', validators=[Optional(), URL(message="Invalid URL")])
-    submit = SubmitField('Save author')
+    submit = SubmitField('Save Author')
 
 class SignupForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Email()])
@@ -27,4 +27,5 @@ class SignupForm(Form):
 class LoginForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    remember = BooleanField('Remember Me')
     submit = SubmitField('Login')

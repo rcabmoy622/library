@@ -97,7 +97,7 @@ Create Book
 
               {% elif field.name == 'submit' %}
                 <div class="mb-3">
-                  <button type="submit" class="btn btn-primary">Save Book</button>
+                  <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
                 </div>
 
               {% else %}
