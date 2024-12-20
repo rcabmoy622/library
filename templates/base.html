@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  
+{% block header %}
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -29,18 +29,10 @@
 
     <ul class="nav nav-pills">
       <li>
-        <!-- Split button for bookshelf and authors-->
         <div class="btn-group">
-          <a type="button" class="btn btn-dark" href="/bookshelf/">Bookshelf</a>
-          <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="visually-hidden">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/bookshelf/">Bookshelf</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/authors/">Authors</a></li>
-          </ul>
-        </div>
+          <a type="button" class="btn btn-dark border border-white" href="/bookshelf/">Bookshelf</a>
+          <a type="button" class="btn btn-dark border border-white" href="/authors/">Authors</a>
+        </div>        
       </li>
       <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
       <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
@@ -48,12 +40,14 @@
       <li class="nav-item"><a href="#" class="nav-link">About</a></li>
     </ul>
   </header>
+{% endblock %}
 
   <div class="pages_content">
     {% block body %}
     {% endblock %}
   </div>
 
+{% block footer %}
   <footer class="bg-dark text-white py-3">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><a href="/" class="nav-link px-2 text-white">Home</a></li>
@@ -65,6 +59,7 @@
       <p class="text-center text-white">Rubén Cabrera Moya</p>
       <p class="text-center text-white">&copy; 2024 Personal library</p>
   </footer>
+{% endblock %}
   
 </body>
 

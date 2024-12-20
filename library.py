@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
 login_manager = LoginManager(app)
-login_manager.login_view = "auth.login"
+login_manager.login_view = "login"
 login_manager.init_app(app)
 
 @login_manager.user_loader
@@ -34,7 +34,7 @@ def login():
 
         #Check if the user actually exists
         if not user or not check_password_hash(user.password, password):
-            flash('Incorrect email or password. Try again.')
+            flash('Incorrect email or password. Try again.', 'danger')
             return redirect('/login/')
 
         login_user(user, remember=remember)
@@ -78,6 +78,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/bookshelf/')
+@login_required
 def list_books():
     query = request.args.get('search_performed', '')
 
@@ -88,6 +89,7 @@ def list_books():
     return render_template('bookshelf.html', books=books, search_performed=query)
 
 @app.route('/authors/')
+@login_required
 def list_authors():
     query = request.args.get('search_performed', '')
 
@@ -98,6 +100,7 @@ def list_authors():
     return render_template('authors.html', authors=authors, search_performed=query)
 
 @app.route('/book/<int:id>/')
+@login_required
 def view_book_details(id):
     book = Book.query.filter_by(id=id).first()
 
@@ -107,6 +110,7 @@ def view_book_details(id):
         abort(404)
 
 @app.route('/author/<int:id>/')
+@login_required
 def view_author_details(id):
     author = Author.query.filter_by(id=id).first()
 
@@ -116,6 +120,7 @@ def view_author_details(id):
         abort(404)
 
 @app.route('/book/<int:id>/delete/')
+@login_required
 def delete_book(id):
     book = Book.query.filter_by(id=id).first()
     BookAuthor.query.filter_by(book_id=book.id).delete()
@@ -124,6 +129,7 @@ def delete_book(id):
     return redirect('/bookshelf')
 
 @app.route('/author/<int:id>/delete/')
+@login_required
 def delete_author(id):
     author = Author.query.filter_by(id=id).first()
     BookAuthor.query.filter_by(author_id=author.id).delete()
@@ -132,6 +138,7 @@ def delete_author(id):
     return redirect('/authors')
 
 @app.route('/book/create/', methods=["get","post"])
+@login_required
 def create_book():
     form = BookForm(request.form)
     form.category_id.choices = [(category.id, category.name) for category in Category.query.all()]
@@ -161,6 +168,7 @@ def create_book():
     return render_template('create_book.html', form=form)
 
 @app.route('/author/create/', methods=["get","post"])
+@login_required
 def create_author():
     form = AuthorForm(request.form)
 
@@ -188,6 +196,7 @@ def create_author():
     return render_template('create_author.html', form=form)
 
 @app.route('/book/<int:id>/update/', methods=["get","post"])
+@login_required
 def update_book(id):
     book = Book.query.filter_by(id=id).first()
 
@@ -223,6 +232,7 @@ def update_book(id):
     return render_template('update_book.html', book=book, form=form)
 
 @app.route('/author/<int:id>/update/', methods=["get","post"])
+@login_required
 def update_author(id):
     author = Author.query.filter_by(id=id).first()
 
@@ -251,6 +261,7 @@ def update_author(id):
     return render_template('update_author.html', author=author, form=form)
 
 @app.route('/search/', methods=['get'])
+@login_required
 def search():
     query = request.args.get('search_performed')
     book_results = Book.query.filter(Book.title.ilike(f'%{query}%')).all()

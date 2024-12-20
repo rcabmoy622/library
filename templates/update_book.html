@@ -57,11 +57,12 @@ Update '{{ book.title }}'
               {% elif field.name == 'category_id' or field.name == 'state_id' %}
                 <div class="mb-3">
                   <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <select class="form-select {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
-                          id="{{ field.id }}" 
-                          name="{{ field.name }}">                    
+                  <select
+                    class="form-select {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
+                    id="{{ field.id }}" 
+                    name="{{ field.name }}">                    
                     {% for value, label in field.choices %}
-                      <option value="{{ field.data }}" {% if value == field.data %}selected{% endif %}>
+                      <option value="{{ value }}" {% if value == field.data %}selected{% endif %}>
                         {{ label }}
                       </option>
                     {% endfor %}
@@ -78,9 +79,11 @@ Update '{{ book.title }}'
               {% elif field.name == 'description' %}
                 <div class="mb-3">
                   <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <textarea class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
-                            id="{{ field.id }}"
-                            name="{{ field.name }}">{{ field.data }}</textarea>
+                  <textarea
+                    class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
+                    id="{{ field.id }}"
+                    name="{{ field.name }}"
+                    placeholder="Enter {{ field.label.text | lower }}">{{ field.data }}</textarea>
                   {% if field.errors and request.method == 'POST' %}
                   <div class="invalid-feedback">
                     {% for error in field.errors %}
@@ -97,17 +100,20 @@ Update '{{ book.title }}'
 
               {% else %}
                 <div class="mb-3">
-                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
-                         id="{{ field.id }}"
-                         name="{{ field.name }}"
-                         value="{{ field.data }}">
+                  <label for="{{ field.id }}" class="form-label">{{ field.label }}</label>
+                  <input 
+                    type="{{ 'url' if field.name == 'image' else 'text' }}" 
+                    class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
+                    id="{{ field.id }}" 
+                    name="{{ field.name }}"
+                    value="{{ field.data }}" 
+                    placeholder="{{ 'Enter ' + field.label.text.lower() }}">
                   {% if field.errors and request.method == 'POST' %}
-                  <div class="invalid-feedback">
-                    {% for error in field.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
+                    <div class="invalid-feedback">
+                      {% for error in field.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
                   {% endif %}
                 </div>
               {% endif %}

@@ -8,92 +8,57 @@ Sign Up
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
 
+{% block header %}
+{% endblock %}
+
 {% block body %}
+
 <section class="page_container">
 
-  <div class="container">
-  
-    <div class="card shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-12">
-          <div class="card-body">
-            <h5 class="card-title">Sign Up</h5>
-            
-            {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
+<main class="d-flex justify-content-center align-items-center pt-5">
+  <form method="POST" class="p-4 border rounded shadow-sm" style="max-width: 400px; width: 100%;">
+    <h1 class="h3 mb-3 fw-normal text-center">Sign up</h1>
 
-            <form method="POST">
-              {% for field in form %}  
-                {% if field.name == 'email' %}
-                <div class="mb-3">
-                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
-                         id="{{ field.id }}"
-                         name="{{ field.name }}"
-                         type="email">
-                  {% if field.errors and request.method == 'POST' %}
-                  <div class="invalid-feedback">
-                    {% for error in field.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-                </div>
-
-                {% elif field.name == 'name' %}
-                <div class="mb-3">
-                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
-                         id="{{ field.id }}"
-                         name="{{ field.name }}"
-                         type="text">
-                  {% if field.errors and request.method == 'POST' %}
-                  <div class="invalid-feedback">
-                    {% for error in field.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-                </div>
-                  
-                {% elif field.name == 'password' %}
-                <div class="mb-3">
-                  <label class="form-label" for="{{ field.id }}">{{ field.label }}</label>
-                  <input class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
-                         id="{{ field.id }}"
-                         name="{{ field.name }}"
-                         type="password">
-                  {% if field.errors and request.method == 'POST' %}
-                  <div class="invalid-feedback">
-                    {% for error in field.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-                </div>
-  
-                {% elif field.name == 'submit' %}
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
-                  </div>
-  
-                {% endif %}
-              {% endfor %}
-            </form>
-  
-          </div>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-      </div>
-    </div>
-  </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% for field in form %}
+      {% if field.name == 'submit' %}
+        <button type="submit" class="btn btn-dark w-100 py-2 mt-4">{{ form.submit.label.text }}</button>
+      {% else %}
+        <div class="form-floating mb-3">
+          <input 
+            type="{{ 'email' if field.name == 'email' else 'text' if field.name == 'name' else 'password' if field.name == 'password' }}"
+            class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
+            id="{{ field.id }}" 
+            name="{{ field.name }}"
+            placeholder="{{ field.label.text }}">
+            <label for="{{ field.id }}">{{ field.label.text }}</label>
+          {% if field.errors and request.method == 'POST' %}
+            <div class="invalid-feedback">
+              {% for error in field.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    <p class="mt-5 text-body-secondary text-center">© 2024</p>
+  </form>
+</main>
+
 </section>
 
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

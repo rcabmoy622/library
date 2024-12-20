@@ -59,3 +59,11 @@ h1 {
     text-overflow: ellipsis;
     height: auto;
 }
+
+.nav-link {
+    color: #343a40;
+}
+
+.nav-link:hover {
+    color: #000000;
+}
