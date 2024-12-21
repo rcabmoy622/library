@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+Personal library
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="container">
+    <h1 class="mb-4">About Me</h1>
+    <p class="lead text-center">
+        Welcome to your personal library—an organized space where you can store an unlimited number of books and authors. With our platform, you can easily manage and connect books to their authors, ensuring everything stays neat and accessible in one place. The intuitive search feature allows you to find exactly what you need in no time.
+    </p>
+    <div class="row gap-5">
+        <div class="col-md-6 py-5">
+        <h3>¿Why this project?</h3>
+        <p>
+            This project is part of the first trimester for the Web Application Implementation module. The goal is to create a web application using Flask that fulfills the following requirements:
+            <ul>
+                <li>Use a Git repository</li>
+                <li>Create a virtual environment</li>
+            </ul>
+            The core features include:
+            <ul>
+                <li>A list view to display the items in the library</li>
+                <li>A search function to find books and authors quickly</li>
+                <li>A detailed view for each item</li>
+                <li>CRUD operations for managing books and authors</li>
+                <li>An Entity-Relationship (E-R) model with at least three entities</li>
+            </ul>
+            Additionally, optional features include:
+            <ul>
+                <li>User management (login and sign-up)</li>
+                <li>Integration of a CSS framework for styling</li>
+            </ul>
+        </p>
+        </div>
+        <div class="col-md-4 py-5">
+        <h3>Personal information</h3>
+        <p>
+            <strong>Name: </strong>Rubén Cabrera Moya<br>
+            <strong>Course: </strong>2º Network Computer Systems Administration<br>
+            <strong>Module: </strong>Web Application Implementation<br>
+            <strong>Academic Year: </strong>2024-2025<br>
+            <strong>Email: </strong>rcabmoy622@g.educaand.es
+        </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

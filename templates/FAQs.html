@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+Personal library
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="container">
+  <h1 class="mb-4">Frequently Asked Questions (FAQs)</h1>
+  <p class="lead text-center">
+    Here you will find answers to some of the most common questions about using your personal library.
+  </p>
+
+  <div class="accordion py-5" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="true" aria-controls="faqCollapseOne">
+          What is this platform about?
+        </button>
+      </h2>
+      <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          This platform allows you to create your personal library. You can store and organize books and authors, and connect them in a simple, easy-to-use interface. Whether you're a casual reader or a book enthusiast, this platform will help you keep your library organized and accessible at all times.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+          How do I add books to my library?
+        </button>
+      </h2>
+      <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          To add books, simply go to the "Create Book" page and fill out the required details. You can add the title, description, category, image, and link books to their respective authors. Once you submit the form, the book will be added to your library.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+          Can I search for books or authors in my library?
+        </button>
+      </h2>
+      <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Yes! You can use the search feature on the bookshelf or authors page to quickly find any book or author in your library. Simply enter the title or name, and the platform will show you the relevant results in no time.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faqFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+          Do I need to be logged in to use the library features?
+        </button>
+      </h2>
+      <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Yes, you need to log in to create and manage your library. If you don’t have an account, you can easily sign up on the registration page. Once logged in, you will be able to add, edit, and delete books and authors, as well as customize your personal library.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

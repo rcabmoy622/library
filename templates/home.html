@@ -6,12 +6,42 @@ Personal library
 
 {% block body %}
 
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="https://ncetir.com/Images/login@4x.png" 
+                 class="d-block mx-lg-auto img-fluid" 
+                 alt="Add authors" 
+                 width="700" height="500" 
+                 loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold text-body-emphasis lh-1 mb-3">Identify yourself before start</h1>
+            <p class="lead pt-2">
+                To enjoy all the features of your personal reading space, you need to log in to your account.
+                <br>
+                If you already have an account, simply log in below. If you don't have an account yet, you can easily create one to get started.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start pt-3">
+                <a type="button" href="/login/" class="btn btn-dark btn-lg px-4 me-md-2 fw-bold">Log in</a>
+                <a type="button" href="/signup/" class="btn btn-outline-secondary btn-lg px-4">Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5" style="border: none; background-color: #ffffff; height: 45px; 
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 -5px 15px rgba(0, 0, 0, 0.6);">
+
+
 <div class="px-4 pt-5 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold text-body-emphasis">Have all your lectures in one place</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">In your private library, you can add as many books as you want, from classic novels to the latest bestsellers. Categorize them, search through your collection, and enjoy a personalized reading journey.</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <a type="button" href="/bookshelf/" class="btn btn-dark btn-lg px-4 me-sm-3" >My library</a>
+        <p class="lead mb-4 pt-2">
+            In your private library, you can add as many books as you want, from classic novels to the latest bestsellers. Categorize them, search through your collection, and enjoy a personalized reading journey.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 pt-3">
+            <a type="button" href="/bookshelf/" class="btn btn-dark btn-lg px-4 me-sm-3 fw-bold" >My library</a>
             <a type="button" href="/book/create/" class="btn btn-outline-secondary btn-lg px-4">Add book</a>
         </div>
     </div>
@@ -28,23 +58,24 @@ Personal library
 <hr class="my-5" style="border: none; background-color: #ffffff; height: 45px; 
     box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 -5px 15px rgba(0, 0, 0, 0.6);">
 
-<div class="container col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-        <div class="col-10 col-sm-8 col-lg-6">
-            <img src="https://img.freepik.com/premium-vector/online-library-people-reading-books-smartphone-with-reader-app-online-book-store-library-education-flat-concept-illustration-education-book-app-digital-bookshelf-students_53562-11803.jpg" 
-                 class="d-block mx-lg-auto img-fluid" 
-                 alt="Add authors" 
-                 width="700" height="500" 
-                 loading="lazy">
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Track your favourite authors</h1>
+        <p class="lead pt-2">
+            Store your favourite authors alongside your books, easily organize them, and keep track of all their works and creations in one convenient, centralized place, making it simple to manage your entire literary collection.
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 pt-3">
+          <a type="button" href="/authors/" class= "btn btn-dark btn-lg px-4 me-md-2 fw-bold">My authors</a>
+          <a type="button" href="/authors/create" class="btn btn-outline-secondary btn-lg px-4">Add author</a>
         </div>
-        <div class="col-lg-6">
-            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Track your favourite authors</h1>
-            <p class="lead">Store your favourite authors alongside your books, easily organize them, and keep track of all their works and creations in one convenient, centralized place, making it simple to manage your entire literary collection.</p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a type="button" href="/authors/" class="btn btn-dark btn-lg px-4 me-md-2">My authors</a>
-                <a type="button" href="/author/create" class="btn btn-outline-secondary btn-lg px-4">Add author</a>
-            </div>
-        </div>
+      </div>
+      <div class="col-lg-4 p-0">
+          <img src="https://img.freepik.com/premium-vector/online-library-people-reading-books-smartphone-with-reader-app-online-book-store-library-education-flat-concept-illustration-education-book-app-digital-bookshelf-students_53562-11803.jpg"
+          class="rounded-lg-3" 
+          alt="Digital authors"
+          width="620">
+      </div>
     </div>
 </div>
 

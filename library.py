@@ -11,10 +11,19 @@ db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.init_app(app)
+login_manager.login_message_category = 'danger'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
+
+@app.route('/about/')
+def about():
+    return render_template('about.html')
+
+@app.route('/faqs/')
+def faqs():
+    return render_template('faqs.html')
 
 @app.route('/profile/')
 @login_required
@@ -24,6 +33,7 @@ def profile():
 @app.route('/login/', methods=["get","post"])
 def login():
     form = LoginForm(request.form)
+    next_url = request.args.get('next')
     
     if form.validate() and request.method == "POST":
         email = form.email.data
@@ -35,11 +45,11 @@ def login():
         #Check if the user actually exists
         if not user or not check_password_hash(user.password, password):
             flash('Incorrect email or password. Try again.', 'danger')
-            return redirect('/login/')
+            return redirect(f'/login/?next={next_url}')
 
         login_user(user, remember=remember)
         flash('Welcome back!', 'success')
-        return redirect('/profile/')
+        return redirect(next_url or '/profile/')
     
     return render_template('login.html', form=form)
 

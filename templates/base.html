@@ -24,20 +24,53 @@
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-4">Personal library</span>
+      <span class="fs-4 fw-bold">Personal library</span>
     </a>
 
     <ul class="nav nav-pills">
-      <li>
-        <div class="btn-group">
-          <a type="button" class="btn btn-dark border border-white" href="/bookshelf/">Bookshelf</a>
-          <a type="button" class="btn btn-dark border border-white" href="/authors/">Authors</a>
-        </div>        
+      {% if current_user.is_authenticated %}
+      <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="/about/" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="/faqs/" class="nav-link">FAQs</a></li>
+      <li class="nav-item ps-2 pe-4">
+        <div class="dropdown-center">
+          <button class="btn btn-outline-dark dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reading corner
+          </button>
+          <ul class="dropdown-menu shadow">
+            <li><a class="dropdown-item" href="/bookshelf/">Bookshelf</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/authors/">Authors</a></li>
+          </ul>
+        </div>
       </li>
-      <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+      <li class="nav-item pe-3">
+        <div class="dropdown">
+          <a style="cursor: pointer;" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png" alt="mdo" width="38" height="38" class="rounded-circle" style="border: 1px solid #6c757d;">
+          </a>
+          <ul class="dropdown-menu shadow">
+            <li><a class="dropdown-item" href="/profile/">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout/">Log out</a></li>
+          </ul>
+        </div>
+      </li>
+      {% else %}
+      <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="/about/" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="/faqs/" class="nav-link">FAQs</a></li>
+      <li class="nav-item px-2">
+        <a class="btn btn-dark fw-bold" href="/login/" type="button" >
+          Log in
+        </a>
+      </li>
+      <li class="nav-item ps-2 pe-4">
+        <a class="btn btn-outline-dark fw-bold" href="/signup/" type="button">
+          Sign up
+        </a>
+      </li>   
+      {% endif %}
     </ul>
   </header>
 {% endblock %}

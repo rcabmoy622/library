@@ -22,10 +22,10 @@ class SignupForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Email()])
     name = StringField('Name', validators=[DataRequired(), Length(min=4, max=80)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
-    submit = SubmitField('Sign Up')
+    submit = SubmitField('Sign up')
 
 class LoginForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    submit = SubmitField('Log in')

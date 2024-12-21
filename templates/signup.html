@@ -15,46 +15,51 @@ Sign Up
 
 <section class="page_container">
 
-<main class="d-flex justify-content-center align-items-center pt-5">
-  <form method="POST" class="p-4 border rounded shadow-sm" style="max-width: 400px; width: 100%;">
-    <h1 class="h3 mb-3 fw-normal text-center">Sign up</h1>
+  <h1 class="h2 fw-bold text-center mb-3 pt-5">Create an account to access your personal library</h1>
 
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+  <main class="d-flex justify-content-center align-items-center pt-4">
+    <form method="POST" class="p-4 border rounded shadow-sm" style="max-width: 400px; width: 100%;">
+      <h1 class="h3 mb-3 text-center">Sign up</h1>
 
-    {% for field in form %}
-      {% if field.name == 'submit' %}
-        <button type="submit" class="btn btn-dark w-100 py-2 mt-4">{{ form.submit.label.text }}</button>
-      {% else %}
-        <div class="form-floating mb-3">
-          <input 
-            type="{{ 'email' if field.name == 'email' else 'text' if field.name == 'name' else 'password' if field.name == 'password' }}"
-            class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
-            id="{{ field.id }}" 
-            name="{{ field.name }}"
-            placeholder="{{ field.label.text }}">
-            <label for="{{ field.id }}">{{ field.label.text }}</label>
-          {% if field.errors and request.method == 'POST' %}
-            <div class="invalid-feedback">
-              {% for error in field.errors %}
-                <span>{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
+      {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
       {% endif %}
-    {% endfor %}
-    <p class="mt-5 text-body-secondary text-center">© 2024</p>
-  </form>
-</main>
+      {% endwith %}
+
+      {% for field in form %}
+        {% if field.name == 'submit' %}
+          <button type="submit" class="btn btn-dark w-100 py-2 mt-4">{{ form.submit.label.text }}</button>
+        {% else %}
+          <div class="form-floating mb-3">
+            <input 
+              type="{{ 'email' if field.name == 'email' else 'text' if field.name == 'name' else 'password' if field.name == 'password' }}"
+              class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
+              id="{{ field.id }}" 
+              name="{{ field.name }}"
+              placeholder="{{ field.label.text }}">
+              <label for="{{ field.id }}">{{ field.label.text }}</label>
+            {% if field.errors and request.method == 'POST' %}
+              <div class="invalid-feedback">
+                {% for error in field.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <p class="pt-5 text-body-primary text-center">¿Already have an account? <a href="/login/">Log in</a></p>
+
+      <p class="pt-3 text-body-secondary text-center">Rubén Cabrera Moya</p>
+      <p class="text-body-secondary text-center">&copy; 2024 Personal library</p>
+    </form>
+  </main>
 
 </section>
 
