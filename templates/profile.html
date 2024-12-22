@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login
+Your profile
 {% endblock %}
 
 {% block style %}
@@ -9,15 +9,111 @@ Login
 {% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
-<section class="page_container">
 
-<div class="container">
+<div class="container-fluid mt-4">
+  <!-- Row with Sidebar and Main Content -->
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 pe-4">
+      <div class="d-flex flex-column p-3 bg-body-primary">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+          <span class="fs-4">Profile</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto" id="pills-tab" role="tablist">
+          <!-- Enlace a Dashboard -->
+          <li class="nav-item pb-3" role="presentation">
+            <button class="btn active btn-outline-dark" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true">
+              <i class="bi bi-speedometer2"></i> Dashboard
+            </button>
+          </li>
+          <!-- Enlace a Settings -->
+          <li class="nav-item" role="presentation">
+            <button class="btn btn-outline-dark" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings" aria-selected="false">
+              <i class="bi bi-gear"></i> Settings
+            </button>
+          </li>
+        </ul>
+        <hr>
+        <a class="btn btn-dark fw-bold" href="/logout/" type="button">
+          Log out <i class="bi bi-box-arrow-right"></i>
+        </a>
+      </div>
+    </div>
 
-  <h1 class="title">
-    Welcome, {{name}}!
-  </h1>
+    <!-- Main Content -->
+    <div class="col-md-9 pe-5">
+      <!-- Tab content (Dashboard and Settings) -->
+      <div class="tab-content" id="pills-tabContent">
+        
+        <!-- Dashboard Section -->
+        <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-dashboard-tab">
+          <h3>Welcome, {{ name }}!</h3>
+          <h4>Summary</h4>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Total Books</h5>
+                  <p class="card-text">{{ total_books }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Total Authors</h5>
+                  <p class="card-text">{{ total_authors }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Category with Most Books</h5>
+                  <p class="card-text">{{ total_books }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Author with Most Books</h5>
+                  <p class="card-text">{{ most_books_author }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Settings Section -->
+        <div class="tab-pane fade" id="pills-settings" role="tabpanel" aria-labelledby="pills-settings-tab">
+          <h4>Account Settings</h4>
+          <form method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{ name }}">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{ email }}">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank if you don't want to change it">
+            </div>
+            <div class="mb-3">
+              <label for="password_confirm" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm your new password">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
-</section>
+
 {% endblock %}

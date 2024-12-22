@@ -28,7 +28,7 @@ def faqs():
 @app.route('/profile/')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', name=current_user.name, email=current_user.email)
 
 @app.route('/login/', methods=["get","post"])
 def login():
