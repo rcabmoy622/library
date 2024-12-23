@@ -26,12 +26,13 @@ Personal library
             <a type="button" href="/book/create/" class="btn btn-outline-secondary btn-lg px-4">Add book</a>
         </div>
     </div>
-    <div class="overflow-hidden" style="max-height: 40vh;">
-        <div class="container px-5" style="overflow: hidden; width: 700px; height: 500px; border-radius: 15px;">
-            <img src="https://media.istockphoto.com/id/604333946/vector/bookshelves-with-books-on-laptop-screen-online-digital-library.jpg?s=612x612&w=0&k=20&c=0HCRo7OUTHJBMCuE9V9T6psd1b0eODVfxba6a2qJc2U="
+    <div class="overflow-hidden" style="max-height: 50vh;">
+        <div class="container px-5" style="overflow: hidden; width: 1000px; height: 100%; border-radius: 15px;">
+            <img src="{{ url_for('static', filename='images/digital_bookshelf.svg') }}"
                  class="img-fluid border rounded-3 shadow-lg mb-4" 
                  alt="Digital Bookshelf" 
-                 style="object-fit: cover; transform: scale(1.8);" loading="lazy">
+                 style="object-fit: contain; width: 100%; height: 100%;" 
+                 loading="lazy">
         </div>
     </div>
 </div>

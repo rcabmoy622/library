@@ -38,7 +38,17 @@ def profile():
     form = ProfileForm(request.form, obj=user)
 
     total_books = Book.query.count()
+
     total_authors = Author.query.count()
+
+    category_with_most_books = db.session.query(
+        Category.name, db.func.count(Book.id).label('book_count')
+        ).join(Book, Book.CategoryID == Category.id).group_by(Category.id).order_by(db.desc('book_count')).first()
+    
+    author_with_most_books = db.session.query(
+        Author.name, db.func.count(Book.id).label('book_count')
+        ).join(Book.authors).group_by(Author.id).order_by(db.desc('book_count')).first()
+
 
     if form.validate() and request.method == "POST":
         # Check if the email exists and is not of the current user
@@ -62,7 +72,15 @@ def profile():
         flash('Profile updated successfully!', 'success')
         return redirect('/profile/')
     
-    return render_template('profile.html', form=form, name=user.name, email=user.email, total_books=total_books, total_authors=total_authors)
+    return render_template('profile.html', 
+                           form=form, 
+                           name=user.name, 
+                           email=user.email, 
+                           total_books=total_books, 
+                           total_authors=total_authors, 
+                           category_with_most_books=category_with_most_books,
+                           author_with_most_books=author_with_most_books
+                           )
 
 
 @app.route('/login/', methods=["get","post"])
