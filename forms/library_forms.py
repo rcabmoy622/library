@@ -12,7 +12,7 @@ class BookForm(Form):
 
 
 class AuthorForm(Form):
-    name = StringField('Name', validators=[DataRequired(), Length(min=4, max=80)])
+    name = StringField('Full Name', validators=[DataRequired(), Length(min=4, max=80)])
     biography = TextAreaField('Biography', validators=[Optional()])
     book = SelectMultipleField('Books', validators=[Optional()], choices=[])
     image = StringField('Image URL', validators=[Optional(), URL(message="Invalid URL")])
@@ -20,7 +20,7 @@ class AuthorForm(Form):
 
 class SignupForm(Form):
     email = EmailField('Email', validators=[DataRequired(), Email()])
-    name = StringField('Name', validators=[DataRequired(), Length(min=4, max=80)])
+    name = StringField('Full Name', validators=[DataRequired(), Length(min=4, max=80)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     submit = SubmitField('Sign up')
 
@@ -29,3 +29,10 @@ class LoginForm(Form):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log in')
+
+class ProfileForm(Form):
+    name = StringField('Full Name', validators=[DataRequired(), Length(min=4, max=80)])
+    email = EmailField('Email', validators=[DataRequired(), Email()])
+    profilePicture = StringField('Profile Picture URL', validators=[Optional(), URL(message="Invalid URL")])
+    password = PasswordField('New Password', validators=[Optional(), Length(min=6)])
+    submit = SubmitField('Update profile')

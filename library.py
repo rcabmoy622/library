@@ -1,7 +1,7 @@
-from flask import Flask, abort, render_template, request, redirect, flash
+from flask import Flask, abort, g, render_template, request, redirect, flash
 import config
 from bbdd.db import Book, Category, Author, State, BookAuthor, User, db
-from forms.library_forms import BookForm, AuthorForm, SignupForm, LoginForm
+from forms.library_forms import BookForm, AuthorForm, SignupForm, LoginForm, ProfileForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
@@ -17,6 +17,11 @@ login_manager.login_message_category = 'danger'
 def load_user(user_id):
     return User.query.get(user_id)
 
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        g.profile_picture_url = current_user.profilePicture or 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
+
 @app.route('/about/')
 def about():
     return render_template('about.html')
@@ -25,10 +30,34 @@ def about():
 def faqs():
     return render_template('faqs.html')
 
-@app.route('/profile/')
+@app.route('/profile/', methods=["get", "post"])
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name, email=current_user.email)
+    user = current_user
+    form = ProfileForm(request.form, obj=user)
+
+    if form.validate() and request.method == "POST":
+        # Check if the email exists and is not of the current user
+        existing_user = User.query.filter(User.email == form.email.data, User.id != user.id).first()
+        if existing_user:
+            flash('Email address already exists.', 'danger')
+            return redirect('/profile/')
+
+        user.name = form.name.data
+        user.email = form.email.data
+
+        if form.profilePicture.data:
+            user.profilePicture = form.profilePicture.data
+        
+        if form.password.data:
+            user.password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect('/profile/')
+    
+    return render_template('profile.html', form=form, name=user.name, email=user.email, profile_picture_url=user.profilePicture)
+
 
 @app.route('/login/', methods=["get","post"])
 def login():
@@ -42,7 +71,7 @@ def login():
         
         user = User.query.filter_by(email=email).first()
 
-        #Check if the user actually exists
+        # Check if the user exists
         if not user or not check_password_hash(user.password, password):
             flash('Incorrect email or password. Try again.', 'danger')
             return redirect(f'/login/?next={next_url}')
@@ -58,7 +87,8 @@ def signup():
     form = SignupForm(request.form)
 
     if form.validate() and request.method == "POST":
-        user = User.query.filter_by(email=form.email.data).first() # If this returns a user, then the email already exists in database
+        # If this returns a user, then the email exists in database
+        user = User.query.filter_by(email=form.email.data).first()
 
         if user:
             flash('Email address already exists', 'danger')
@@ -80,6 +110,15 @@ def signup():
 @app.route('/logout/')
 @login_required
 def logout():
+    logout_user()
+    return redirect('/')
+
+@app.route('/account_delete/', methods=["post"])
+@login_required
+def delete_account():
+    db.session.delete(current_user)
+    db.session.commit()
+
     logout_user()
     return redirect('/')
 
@@ -223,9 +262,11 @@ def update_book(id):
         book.StateID = form.state_id.data
         book.image = form.image.data
 
-        BookAuthor.query.filter_by(book_id=book.id).delete() #Delete existing book-author relationships
+        # Delete existing book-author relationships
+        BookAuthor.query.filter_by(book_id=book.id).delete()
 
-        selected_authors = form.author.data #Create selected book-author relationships
+        # Create selected book-author relationships
+        selected_authors = form.author.data
         for author_id in selected_authors:
             book_author = BookAuthor(book_id=book.id, author_id=author_id)
             db.session.add(book_author)
@@ -254,9 +295,11 @@ def update_author(id):
         author.biography = form.biography.data
         author.image = form.image.data
  
-        BookAuthor.query.filter_by(author_id=author.id).delete() #Delete existing author-book relationships
+        # Delete existing author-book relationships
+        BookAuthor.query.filter_by(author_id=author.id).delete() 
 
-        selected_books = form.book.data #Create Selected Author-Book Relationships
+        # Create Selected Author-Book Relationships
+        selected_books = form.book.data 
         for book_id in selected_books:
             book_author = BookAuthor(book_id=book_id, author_id=author.id)
             db.session.add(book_author)

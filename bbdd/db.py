@@ -67,3 +67,4 @@ class User(UserMixin, db.Model):
     email = Column(String(100), unique=True)
     password = Column(String(100))
     name = Column(String(1000))
+    profilePicture = Column(String, nullable=True)
