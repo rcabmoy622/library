@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,13 +35,18 @@
       {% if current_user.is_authenticated %}
       <li class="nav-item ps-2 pe-4">
         {% if request.path == '/bookshelf/' %}
-        <a class="btn btn-dark fw-bold" href="/authors/" type="button" >Authors <i class="bi bi-arrow-bar-right"></i></a>
+        <a class="btn btn-dark fw-bold" href="/authors/" type="button" >
+          Authors <i class="bi bi-arrow-bar-right"></i>
+        </a>
         {% elif request.path == '/authors/' %}
-        <a class="btn btn-dark fw-bold" href="/bookshelf/" type="button" >Bookshelf <i class="bi bi-arrow-bar-right"></i></a>
+        <a class="btn btn-dark fw-bold" href="/bookshelf/" type="button" >
+          Bookshelf <i class="bi bi-arrow-bar-right"></i>
+        </a>
         {% else %}
         <div class="dropdown-center">
-          <button class="btn btn-outline-dark dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-outline-dark fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-width: 2px;">
             Your library
+            <i class="bi bi-caret-down-fill ms-1" style="font-size: 0.8rem; vertical-align: middle;"></i>
           </button>
           <ul class="dropdown-menu shadow">
             <li><a class="dropdown-item fs-6" href="/bookshelf/">Bookshelf</a></li>
@@ -50,19 +55,24 @@
           </ul>
         </div>
       </li>
-      {% endif %}
+        {% endif %}
       <li class="nav-item pe-3">
         <div class="dropdown">
-          <a style="cursor: pointer;" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ g.profile_picture_url }}" alt="" width="38" height="38" class="rounded-circle" style="border: 1px solid #6c757d;">
+          <a style="cursor: pointer;" class="d-block link-body-emphasis text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+            <div style="width: 38px; height: 38px; border-radius: 50%; overflow: hidden; display: inline-block; border: 1px solid #6c757d; vertical-align: middle;">
+              <img src="{{ g.profile_picture_url }}" alt="User Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <i class="bi bi-caret-down-fill ms-1" style="font-size: 0.8rem; vertical-align: middle;"></i>
           </a>
           <ul class="dropdown-menu shadow">
+            <li class="dropdown-item text-center fs-6 fw-bold">Logged as:<br>{{ g.username }}</li>
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item fs-6" href="/profile/">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item fs-6" href="/logout/">Log out</a></li>
           </ul>
         </div>
-      </li>
+      </li>        
       {% else %}
       <li class="nav-item px-2">
         <a class="btn btn-dark fw-bold" href="/login/" type="button" >Log in</a>

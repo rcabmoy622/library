@@ -10,8 +10,8 @@ Update '{{ author.name }}'
 
 <div class="container">
   <div class="mb-3">
-    <a href="/authors/" class="btn btn-secondary btn-sm">
-      &larr; Back to Your Authors
+    <a href="/authors/" class="btn btn-dark btn-sm">
+      <i class="bi bi-arrow-left"></i> Back to Your Authors
     </a>
   </div>
 
@@ -71,7 +71,9 @@ Update '{{ author.name }}'
                 </div>
               {% elif field.name == 'submit' %}
                 <div class="mb-3">
-                  <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+                  <button type="submit" class="btn btn-dark">
+                    {{ form.submit.label.text }} <i class="bi bi-floppy"></i>
+                  </button>
                 </div>
               {% else %}
                 <div class="mb-3">

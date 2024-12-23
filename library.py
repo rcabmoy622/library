@@ -1,4 +1,4 @@
-from flask import Flask, abort, g, render_template, request, redirect, flash
+from flask import Flask, abort, render_template, request, redirect, flash, g
 import config
 from bbdd.db import Book, Category, Author, State, BookAuthor, User, db
 from forms.library_forms import BookForm, AuthorForm, SignupForm, LoginForm, ProfileForm
@@ -21,6 +21,7 @@ def load_user(user_id):
 def before_request():
     if current_user.is_authenticated:
         g.profile_picture_url = current_user.profilePicture or 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
+        g.username = current_user.name
 
 @app.route('/about/')
 def about():
@@ -36,6 +37,9 @@ def profile():
     user = current_user
     form = ProfileForm(request.form, obj=user)
 
+    total_books = Book.query.count()
+    total_authors = Author.query.count()
+
     if form.validate() and request.method == "POST":
         # Check if the email exists and is not of the current user
         existing_user = User.query.filter(User.email == form.email.data, User.id != user.id).first()
@@ -48,6 +52,8 @@ def profile():
 
         if form.profilePicture.data:
             user.profilePicture = form.profilePicture.data
+        else:
+            user.profilePicture = 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
         
         if form.password.data:
             user.password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
@@ -56,7 +62,7 @@ def profile():
         flash('Profile updated successfully!', 'success')
         return redirect('/profile/')
     
-    return render_template('profile.html', form=form, name=user.name, email=user.email, profile_picture_url=user.profilePicture)
+    return render_template('profile.html', form=form, name=user.name, email=user.email, total_books=total_books, total_authors=total_authors)
 
 
 @app.route('/login/', methods=["get","post"])
@@ -113,7 +119,7 @@ def logout():
     logout_user()
     return redirect('/')
 
-@app.route('/account_delete/', methods=["post"])
+@app.route('/delete_account/', methods=["post"])
 @login_required
 def delete_account():
     db.session.delete(current_user)
