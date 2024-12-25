@@ -298,13 +298,17 @@ def profile():
 
     total_authors = Author.query.count()
 
-    category_with_most_books = db.session.query(
+    author_with_most_books_query = db.session.query(
+        Author.name, db.func.count(Book.id).label('book_count')
+        ).join(Book.authors).group_by(Author.id).order_by(db.desc('book_count')).first()
+    
+    author_with_most_books = f"{author_with_most_books_query[0]} - ({author_with_most_books_query[1]})"
+
+    category_with_most_books_query = db.session.query(
         Category.name, db.func.count(Book.id).label('book_count')
         ).join(Book, Book.CategoryID == Category.id).group_by(Category.id).order_by(db.desc('book_count')).first()
     
-    author_with_most_books = db.session.query(
-        Author.name, db.func.count(Book.id).label('book_count')
-        ).join(Book.authors).group_by(Author.id).order_by(db.desc('book_count')).first()
+    category_with_most_books = f"{category_with_most_books_query[0]} - ({category_with_most_books_query[1]})"
 
 
     if form.validate() and request.method == "POST":
