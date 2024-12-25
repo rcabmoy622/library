@@ -52,6 +52,7 @@ Login
               class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
               id="{{ field.id }}" 
               name="{{ field.name }}"
+              value="{{ field.data if field.data else '' }}"
               placeholder="{{ field.label.text }}">
               <label for="{{ field.id }}">{{ field.label.text }}</label>
             {% if field.errors and request.method == 'POST' %}
@@ -67,7 +68,7 @@ Login
       <p class="pt-5 text-body-primary text-center">¿Don't have an account? <a href="/signup/">Sign up</a></p>
 
       <p class="pt-3 text-body-secondary text-center">Rubén Cabrera Moya</p>
-      <p class="text-body-secondary text-center">&copy; 2024 Personal library</p>
+      <p class="text-body-secondary text-center">&copy; 2025 Personal library</p>
     </form>
   </main>
 

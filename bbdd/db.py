@@ -53,7 +53,7 @@ class Book(db.Model):
     title = Column(String(120), nullable=False)
     description = Column(Text(250), nullable=True, default=None)
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
-    StateID = Column(Integer, ForeignKey('states.id'), nullable=False, default=1)
+    StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
     image = Column(String, nullable=True)
 
     authors = relationship('Author', secondary='book_authors', back_populates="books", overlaps="author,book_authors,book" ,cascade="all, delete")

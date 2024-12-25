@@ -10,8 +10,8 @@ Create Book
 
 <div class="container">
   <div class="mb-3">
-    <a href="/bookshelf/" class="btn btn-secondary btn-sm">
-      &larr; Back to Your Library
+    <a href="/bookshelf/" class="btn btn-dark btn-sm">
+      <i class="bi bi-arrow-left"></i> Back to Your Library
     </a>
   </div>
 
@@ -61,11 +61,11 @@ Create Book
                     class="form-select {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
                     id="{{ field.id }}" 
                     name="{{ field.name }}">
-                      <option selected disabled>
+                      <option value="" disabled {% if not field.data %}selected{% endif %}>
                         {{ 'Select category' if field.name == 'category_id' else 'Select state' }}
                       </option>
                     {% for value, label in field.choices %}
-                      <option value="{{ value }}">
+                      <option value="{{ value }}" {% if value|string == field.data|string %}selected{% endif %}>
                         {{ label }}
                       </option>
                     {% endfor %}
@@ -86,7 +86,7 @@ Create Book
                     class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}"
                     id="{{ field.id }}"
                     name="{{ field.name }}"
-                    placeholder="Enter {{ field.label.text | lower }}"></textarea>
+                    placeholder="Enter {{ field.label.text | lower }}">{{ field.data if field.data else '' }}</textarea>
                   {% if field.errors and request.method == 'POST' %}
                   <div class="invalid-feedback">
                     {% for error in field.errors %}
@@ -98,7 +98,9 @@ Create Book
 
               {% elif field.name == 'submit' %}
                 <div class="mb-3">
-                  <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+                  <button type="submit" class="btn btn-dark">
+                    {{ form.submit.label.text }} <i class="bi bi-floppy"></i>
+                  </button>
                 </div>
 
               {% else %}
@@ -109,6 +111,7 @@ Create Book
                     class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
                     id="{{ field.id }}" 
                     name="{{ field.name }}"
+                    value="{{ field.data if field.data else '' }}"
                     placeholder="{{ 'Enter ' + field.label.text.lower() }}">
                   {% if field.errors and request.method == 'POST' %}
                     <div class="invalid-feedback">

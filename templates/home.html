@@ -22,15 +22,15 @@ Personal library
             In your private library, you can add as many books as you want, from classic novels to the latest bestsellers. Categorize them, search through your collection, and enjoy a personalized reading journey.
         </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5 pt-3">
-            <a type="button" href="/bookshelf/" class="btn btn-dark btn-lg px-4 me-sm-3 fw-bold" >My books</a>
-            <a type="button" href="/book/create/" class="btn btn-outline-secondary btn-lg px-4">Add book</a>
+            <a type="button" href="/bookshelf/" class="btn btn-dark btn-lg px-4 me-sm-3 fw-bold">My books</a>
+            <a type="button" href="/book/create/" class="btn btn-outline-secondary btn-lg px-4 fw-bold" style="border-width: 2px;">Add book</a>
         </div>
     </div>
     <div class="overflow-hidden" style="max-height: 50vh;">
         <div class="container px-5" style="overflow: hidden; width: 1000px; height: 100%; border-radius: 15px;">
             <img src="{{ url_for('static', filename='images/digital_bookshelf.svg') }}"
                  class="img-fluid border rounded-3 shadow-lg mb-4" 
-                 alt="Digital Bookshelf" 
+                 alt="Digital bookshelf" 
                  style="object-fit: contain; width: 100%; height: 100%;" 
                  loading="lazy">
         </div>
@@ -58,14 +58,14 @@ Personal library
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 pt-3">
           <a type="button" href="/authors/" class= "btn btn-dark btn-lg px-4 me-md-2 fw-bold">My authors</a>
-          <a type="button" href="/authors/create" class="btn btn-outline-secondary btn-lg px-4">Add author</a>
+          <a type="button" href="/authors/create" class="btn btn-outline-secondary btn-lg px-4 fw-bold" style="border-width: 2px;">Add author</a>
         </div>
       </div>
-      <div class="col-lg-4 p-0">
-          <img src="https://img.freepik.com/premium-vector/online-library-people-reading-books-smartphone-with-reader-app-online-book-store-library-education-flat-concept-illustration-education-book-app-digital-bookshelf-students_53562-11803.jpg"
-          class="rounded-lg-3" 
-          alt="Digital authors"
-          width="620">
+      <div class="col-lg-4 ms-5">
+          <img src="{{ url_for('static', filename='images/author_details.svg') }}"
+          class="border rounded-3 shadow-lg" 
+          alt="Digital authors details"
+          width="520">
       </div>
     </div>
 </div>
@@ -77,9 +77,9 @@ Personal library
 <div class="container col-xxl-8 px-4 pb-5">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-10 col-sm-8 col-lg-6">
-            <img src="https://ncetir.com/Images/login@4x.png" 
+            <img src="{{ url_for('static', filename='images/login.png') }}" 
                  class="d-block mx-lg-auto img-fluid" 
-                 alt="Add authors" 
+                 alt="Login illustration" 
                  width="700" height="500" 
                  loading="lazy">
         </div>
@@ -92,7 +92,7 @@ Personal library
             </p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start pt-3">
                 <a type="button" href="/login/" class="btn btn-dark btn-lg px-4 me-md-2 fw-bold">Log in</a>
-                <a type="button" href="/signup/" class="btn btn-outline-secondary btn-lg px-4">Sign up</a>
+                <a type="button" href="/signup/" class="btn btn-outline-secondary btn-lg px-4 fw-bold" style="border-width: 2px;">Sign up</a>
             </div>
         </div>
     </div>

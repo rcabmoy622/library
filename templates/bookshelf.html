@@ -68,9 +68,11 @@ Your Library
                 {% endif %}
                 {% if book.authors %}
                     {% for author in book.authors %}
-                    <p class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
-                        {{ author.name }}
-                    </p>
+                    <a href="/author/{{author.id}}/" class="text-decoration-none">
+                        <p class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">
+                            {{author.name}}
+                        </p>
+                    </a>
                     {% endfor %}
                 {% endif %}
                 <div class="d-flex justify-content-between align-items-center">

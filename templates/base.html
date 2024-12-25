@@ -18,14 +18,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
 </head>
 
 <body>
 {% block header %}
-  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom ps-4">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-4 fw-bold">Personal library</span>
+      <img src="{{ url_for('static', filename='images/logo.png') }}" width="32" height="32" alt="Logo" style="transform: scale(2.3);">
+      <span class="fs-4 fw-bold ps-4">Personal library</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -65,7 +66,7 @@
             <i class="bi bi-caret-down-fill ms-1" style="font-size: 0.8rem; vertical-align: middle;"></i>
           </a>
           <ul class="dropdown-menu shadow">
-            <li class="dropdown-item text-center fs-6 fw-bold">Logged as:<br>{{ g.username }}</li>
+            <li class="dropdown-header text-center fs-6 fw-bold text-black">Logged as:<br>{{ g.username }}</li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item fs-6" href="/profile/">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -100,7 +101,7 @@
         <li class="nav-item"><a href="/faqs/" class="nav-link px-2 text-white">FAQs</a></li>
       </ul>
       <p class="text-center text-white">Rubén Cabrera Moya</p>
-      <p class="text-center text-white">&copy; 2024 Personal library</p>
+      <p class="text-center text-white">&copy; 2025 Personal library</p>
   </footer>
 {% endblock %}
   

@@ -10,8 +10,8 @@ Create Author
 
 <div class="container">
   <div class="mb-3">
-    <a href="/authors/" class="btn btn-secondary btn-sm">
-      &larr; Back to Your Authors
+    <a href="/authors/" class="btn btn-dark btn-sm">
+      <i class="bi bi-arrow-left"></i> Back to Your Authors
     </a>
   </div>
 
@@ -38,9 +38,11 @@ Create Author
                             <div class="form-check">
                               <input 
                                 class="form-check-input" 
-                                type="checkbox" 
+                                type="checkbox"
+                                name="book"
                                 id="{{ book.id }}" 
-                                name="book">
+                                value="{{ book.data }}"
+                                {% if book.data in form.book.data %}checked{% endif %}>
                               <label class="form-check-label" for="{{ book.id }}">
                                 {{ book.label.text }}
                               </label>
@@ -58,7 +60,7 @@ Create Author
                     class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
                     id="{{ field.id }}" 
                     name="{{ field.name }}"
-                    placeholder="Enter {{ field.label.text | lower }}"></textarea>
+                    placeholder="Enter {{ field.label.text | lower }}">{{ field.data if field.data else '' }}</textarea>
                   </textarea>
                   {% if field.errors and request.method == 'POST' %}
                     <div class="invalid-feedback">
@@ -70,7 +72,9 @@ Create Author
                 </div>
               {% elif field.name == 'submit' %}
                 <div class="mb-3">
-                  <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+                  <button type="submit" class="btn btn-dark">
+                    {{ form.submit.label.text }} <i class="bi bi-floppy"></i>
+                  </button>
                 </div>
               {% else %}
                 <div class="mb-3">
@@ -80,6 +84,7 @@ Create Author
                     class="form-control {% if field.errors and request.method == 'POST' %}is-invalid{% endif %}" 
                     id="{{ field.id }}" 
                     name="{{ field.name }}"
+                    value="{{ field.data if field.data else '' }}"
                     placeholder="{{ 'Enter ' + field.label.text.lower() }}">
                   {% if field.errors and request.method == 'POST' %}
                     <div class="invalid-feedback">

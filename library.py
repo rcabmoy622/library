@@ -23,6 +23,18 @@ def before_request():
         g.profile_picture_url = current_user.profilePicture or 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
         g.username = current_user.name
 
+@app.route('/not_found/')
+def not_found():
+    return render_template('not_found.html'), 404 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('not_found.html'), 404
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
 @app.route('/about/')
 def about():
     return render_template('about.html')
@@ -30,125 +42,6 @@ def about():
 @app.route('/faqs/')
 def faqs():
     return render_template('faqs.html')
-
-@app.route('/profile/', methods=["get", "post"])
-@login_required
-def profile():
-    user = current_user
-    form = ProfileForm(request.form, obj=user)
-
-    total_books = Book.query.count()
-
-    total_authors = Author.query.count()
-
-    category_with_most_books = db.session.query(
-        Category.name, db.func.count(Book.id).label('book_count')
-        ).join(Book, Book.CategoryID == Category.id).group_by(Category.id).order_by(db.desc('book_count')).first()
-    
-    author_with_most_books = db.session.query(
-        Author.name, db.func.count(Book.id).label('book_count')
-        ).join(Book.authors).group_by(Author.id).order_by(db.desc('book_count')).first()
-
-
-    if form.validate() and request.method == "POST":
-        # Check if the email exists and is not of the current user
-        existing_user = User.query.filter(User.email == form.email.data, User.id != user.id).first()
-        if existing_user:
-            flash('Email address already exists.', 'danger')
-            return redirect('/profile/')
-
-        user.name = form.name.data
-        user.email = form.email.data
-
-        if form.profilePicture.data:
-            user.profilePicture = form.profilePicture.data
-        else:
-            user.profilePicture = 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
-        
-        if form.password.data:
-            user.password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-
-        db.session.commit()
-        flash('Profile updated successfully!', 'success')
-        return redirect('/profile/')
-    
-    return render_template('profile.html', 
-                           form=form, 
-                           name=user.name, 
-                           email=user.email, 
-                           total_books=total_books, 
-                           total_authors=total_authors, 
-                           category_with_most_books=category_with_most_books,
-                           author_with_most_books=author_with_most_books
-                           )
-
-
-@app.route('/login/', methods=["get","post"])
-def login():
-    form = LoginForm(request.form)
-    next_url = request.args.get('next')
-    
-    if form.validate() and request.method == "POST":
-        email = form.email.data
-        password = form.password.data
-        remember = form.remember.data
-        
-        user = User.query.filter_by(email=email).first()
-
-        # Check if the user exists
-        if not user or not check_password_hash(user.password, password):
-            flash('Incorrect email or password. Try again.', 'danger')
-            return redirect(f'/login/?next={next_url}')
-
-        login_user(user, remember=remember)
-        flash('Welcome back!', 'success')
-        return redirect(next_url or '/profile/')
-    
-    return render_template('login.html', form=form)
-
-@app.route('/signup/', methods=["get","post"])
-def signup():   
-    form = SignupForm(request.form)
-
-    if form.validate() and request.method == "POST":
-        # If this returns a user, then the email exists in database
-        user = User.query.filter_by(email=form.email.data).first()
-
-        if user:
-            flash('Email address already exists', 'danger')
-            return redirect('/signup/')
-
-        new_user = User()
-        new_user.email=form.email.data
-        new_user.name=form.name.data
-        new_user.password=generate_password_hash(form.password.data, method='pbkdf2:sha256')
-
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash('Account created successfully! Please log in.', 'success')
-        return redirect('/login/')
-    
-    return render_template('signup.html', form=form)
-
-@app.route('/logout/')
-@login_required
-def logout():
-    logout_user()
-    return redirect('/')
-
-@app.route('/delete_account/', methods=["post"])
-@login_required
-def delete_account():
-    db.session.delete(current_user)
-    db.session.commit()
-
-    logout_user()
-    return redirect('/')
-
-@app.route('/')
-def home():
-    return render_template('home.html')
 
 @app.route('/bookshelf/')
 @login_required
@@ -191,24 +84,6 @@ def view_author_details(id):
         return render_template('author_details.html', author=author)
     else:
         abort(404)
-
-@app.route('/book/<int:id>/delete/')
-@login_required
-def delete_book(id):
-    book = Book.query.filter_by(id=id).first()
-    BookAuthor.query.filter_by(book_id=book.id).delete()
-    db.session.delete(book)
-    db.session.commit()
-    return redirect('/bookshelf')
-
-@app.route('/author/<int:id>/delete/')
-@login_required
-def delete_author(id):
-    author = Author.query.filter_by(id=id).first()
-    BookAuthor.query.filter_by(author_id=author.id).delete()
-    db.session.delete(author)
-    db.session.commit()
-    return redirect('/authors')
 
 @app.route('/book/create/', methods=["get","post"])
 @login_required
@@ -337,6 +212,24 @@ def update_author(id):
 
     return render_template('update_author.html', author=author, form=form)
 
+@app.route('/book/<int:id>/delete/')
+@login_required
+def delete_book(id):
+    book = Book.query.filter_by(id=id).first()
+    BookAuthor.query.filter_by(book_id=book.id).delete()
+    db.session.delete(book)
+    db.session.commit()
+    return redirect('/bookshelf')
+
+@app.route('/author/<int:id>/delete/')
+@login_required
+def delete_author(id):
+    author = Author.query.filter_by(id=id).first()
+    BookAuthor.query.filter_by(author_id=author.id).delete()
+    db.session.delete(author)
+    db.session.commit()
+    return redirect('/authors')
+
 @app.route('/search/', methods=['get'])
 @login_required
 def search():
@@ -345,3 +238,119 @@ def search():
     author_results = Author.query.filter(Author.name.ilike(f'%{query}%')).all()
 
     return render_template('search_results.html', book_results=book_results, author_results=author_results, query=query)
+
+@app.route('/signup/', methods=["get","post"])
+def signup():   
+    form = SignupForm(request.form)
+
+    if form.validate() and request.method == "POST":
+        # If this returns a user, then the email exists in database
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user:
+            flash('Email address already exists', 'danger')
+            return redirect('/signup/')
+
+        new_user = User()
+        new_user.email=form.email.data
+        new_user.name=form.name.data
+        new_user.password=generate_password_hash(form.password.data, method='pbkdf2:sha256')
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Account created successfully! Please log in.', 'success')
+        return redirect('/login/')
+    
+    return render_template('signup.html', form=form)
+
+@app.route('/login/', methods=["get","post"])
+def login():
+    form = LoginForm(request.form)
+    next_url = request.args.get('next', '/profile/')
+    
+    if form.validate() and request.method == "POST":
+        email = form.email.data
+        password = form.password.data
+        remember = form.remember.data
+        
+        user = User.query.filter_by(email=email).first()
+
+        # Check if the user exists
+        if not user or not check_password_hash(user.password, password):
+            flash('Incorrect email or password. Try again.', 'danger')
+            return redirect(f'/login/?next={next_url}')
+
+        login_user(user, remember=remember)
+        flash('Welcome back!', 'success')
+
+        return redirect(next_url or '/profile/')
+    
+    return render_template('login.html', form=form)
+
+@app.route('/profile/', methods=["get", "post"])
+@login_required
+def profile():
+    user = current_user
+    form = ProfileForm(request.form, obj=user)
+
+    total_books = Book.query.count()
+
+    total_authors = Author.query.count()
+
+    category_with_most_books = db.session.query(
+        Category.name, db.func.count(Book.id).label('book_count')
+        ).join(Book, Book.CategoryID == Category.id).group_by(Category.id).order_by(db.desc('book_count')).first()
+    
+    author_with_most_books = db.session.query(
+        Author.name, db.func.count(Book.id).label('book_count')
+        ).join(Book.authors).group_by(Author.id).order_by(db.desc('book_count')).first()
+
+
+    if form.validate() and request.method == "POST":
+        # Check if the email exists and is not of the current user
+        existing_user = User.query.filter(User.email == form.email.data, User.id != user.id).first()
+        if existing_user:
+            flash('Email address already exists.', 'danger')
+            return redirect('/profile/')
+
+        user.name = form.name.data
+        user.email = form.email.data
+
+        if form.profilePicture.data:
+            user.profilePicture = form.profilePicture.data
+        else:
+            user.profilePicture = 'https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png'
+        
+        if form.password.data:
+            user.password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        
+        return redirect('/profile/')
+    
+    return render_template('profile.html', 
+                           form=form, 
+                           name=user.name, 
+                           email=user.email, 
+                           total_books=total_books, 
+                           total_authors=total_authors, 
+                           category_with_most_books=category_with_most_books,
+                           author_with_most_books=author_with_most_books
+                           )
+
+@app.route('/logout/')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
+
+@app.route('/delete_account/', methods=["post"])
+@login_required
+def delete_account():
+    db.session.delete(current_user)
+    db.session.commit()
+
+    logout_user()
+    return redirect('/')
