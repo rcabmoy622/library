@@ -12,7 +12,7 @@ The application will be available at http://localhost:5000/
 - - - Requirements - - -
 
 - Python 3.7 or higher
-- Dependencies listed in `requirements.txt`
+- Dependencies listed in requirements.txt
 
 - - - Installation in Linux - - -
 
