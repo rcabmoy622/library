@@ -1,20 +1,20 @@
-- - - Personal Library - - -
+# - - - Personal Library - - -
 This project is about a Flask Web to manage a Personal Library, including books, authors, categories, and states. This application provides a user-friendly interface to manage a book collection.
 Also, the web have user management (login and sign-up).
 The application will be available at http://localhost:5000/
 
-- - - Features - - -
+# - - - Features - - -
 
 - Book Management: Create, update, delete, and view books.
 - Author Management: Add, update, view and delete authors.
 - User Authentication: Users can register, log in, and manage their profiles.
 
-- - - Requirements - - -
+# - - - Requirements - - -
 
 - Python 3.7 or higher
 - Dependencies listed in requirements.txt
 
-- - - Installation in Linux - - -
+# - - - Installation in Linux - - -
 
 1. Clone the repository:
   git clone https://github.com/rcabmoy622/library.git
