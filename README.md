@@ -17,21 +17,33 @@ The application will be available at http://localhost:5000/
 # - - - Installation in Linux - - -
 
 1. Clone the repository:
+  ```
   git clone https://github.com/rcabmoy622/library.git
   cd library
+  ```
 
 2. Create a virtual environment:
+  ```
   python3 -m venv ./venv-library
+  ```
 
 3. Activate the virtual environment:
+  ```
   source ./venv-library/bin/activate
+  ```
 
 4. Install dependencies:
+  ```
   pip install -r requirements.txt
+  ```
 
 5. Set up the database:
 It is very important to execute 'manage.py' to create the tables of our database and add data to it.
+  ```
   python3 manage.py
+  ```
 
 6. Run the application:
+  ```
    flask --app ./library.py run --host=0.0.0.0
+  ```
