@@ -1,6 +1,6 @@
 # Personal Library
-This project is about a Flask Web to manage a Personal Library, including books, authors, categories, and states. This application provides a user-friendly interface to manage a book collection.
-Also, the web have user management (login and sign-up).
+This project is about a Flask Web to manage a Personal Library, including books, authors, categories, and states. The application provides a user-friendly interface to manage a book collection.  
+Also, the web have user management (login and sign-up).  
 The application will be available at http://localhost:5000/
 
 # Features
@@ -38,8 +38,8 @@ The application will be available at http://localhost:5000/
   ```
 
 5. Set up the database:
-[!IMPORTANT]
-It is very important to execute 'manage.py' to create the tables of our database and add data to it.
+> [!IMPORTANT]
+> It is very important to execute 'manage.py' to create the tables of our database and add data to it.
   ```
   python3 manage.py
   ```
