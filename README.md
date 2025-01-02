@@ -38,8 +38,8 @@ The application will be available at http://localhost:5000/
   ```
 
 5. Set up the database:
-> [!IMPORTANT]
-> It is very important to execute 'manage.py' to create the tables of our database and add data to it.
+[!IMPORTANT]
+It is very important to execute 'manage.py' to create the tables of our database and add data to it.
   ```
   python3 manage.py
   ```
