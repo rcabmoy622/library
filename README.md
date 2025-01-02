@@ -8,7 +8,7 @@ The application will be available at http://localhost:5000/
 
 # Features
 
-- Book Management: Create, update, delete, and view books.
+- Book Management: Add, update, delete, and view books.
 - Author Management: Add, update, delete, and view authors.
 - User Authentication: Users can register, log in, and manage their profiles.
 
