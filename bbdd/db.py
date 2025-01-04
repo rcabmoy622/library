@@ -67,4 +67,4 @@ class User(UserMixin, db.Model):
     email = Column(String(100), unique=True)
     password = Column(String(100))
     name = Column(String(1000))
-    profilePicture = Column(String, nullable=True)
+    profilePicture = Column(String, nullable=True, default='https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png')

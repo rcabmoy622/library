@@ -46,7 +46,8 @@ class ProfileForm(Form):
                                                 Regexp(r'^[A-Za-z\s]+$', message="Your name can only contain letters and spaces.")])
     email = EmailField('Email', validators=[DataRequired(message="An email is required."), 
                                             Email()])
-    profilePicture = StringField('Profile Picture URL', validators=[Optional(), URL(message="Invalid image URL.")])
+    profilePicture = StringField('Profile Picture URL', validators=[Optional(), URL(message="Invalid image URL.")],
+                                 default='https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png')
     password = PasswordField('New Password', validators=[Optional(), 
                                                          Length(min=6, message="Your password must contain at least 6 characters.")])
     submit = SubmitField('Update profile')
