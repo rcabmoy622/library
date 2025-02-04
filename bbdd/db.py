@@ -19,7 +19,7 @@ class State(db.Model):
     """States of our application"""
     __tablename__ = 'states'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String(50), nullable=False)
 
 
 class Author(db.Model):
@@ -28,7 +28,7 @@ class Author(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     biography = Column(Text, nullable=True)
-    image = Column(String, nullable=True)
+    image = Column(String(255), nullable=True)
 
     books = relationship('Book', secondary='book_authors', back_populates="authors", overlaps="book,book_authors")
 
@@ -54,7 +54,7 @@ class Book(db.Model):
     description = Column(Text(250), nullable=True, default=None)
     CategoryID = Column(Integer, ForeignKey('categories.id'), nullable=False)
     StateID = Column(Integer, ForeignKey('states.id'), nullable=False)
-    image = Column(String, nullable=True)
+    image = Column(String(255), nullable=True)
 
     authors = relationship('Author', secondary='book_authors', back_populates="books", overlaps="author,book_authors,book" ,cascade="all, delete")
     category = relationship("Category", backref="books")
@@ -65,6 +65,6 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     email = Column(String(100), unique=True)
-    password = Column(String(100))
-    name = Column(String(1000))
-    profilePicture = Column(String, nullable=True, default='https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png')
+    password = Column(String(260))
+    name = Column(String(100))
+    profilePicture = Column(String(255), nullable=True, default='https://static.vecteezy.com/system/resources/previews/042/156/821/non_2x/user-3d-graphic-illustration-free-png.png')
